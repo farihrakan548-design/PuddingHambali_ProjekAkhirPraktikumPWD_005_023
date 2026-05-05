@@ -18,3 +18,10 @@ body {
 .navbar .nav-link:hover {
     color: #d2a679;
 }
+
+.header {
+    background-color: #6c4545;
+    color: #f5e6d3;
+    padding: 2rem 0;
+    font-weight: bold;
+}
