@@ -1,0 +1,20 @@
+
+body {
+    background-color: #f5e6d3;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+.custom-navbar {
+    background-color: #4b2e2e;
+    padding: 15px 0;
+}
+
+.navbar .nav-link {
+    color: #f5e6d3;
+    transition: 0.3s;
+    font-size: 1.1rem;
+}
+
+.navbar .nav-link:hover {
+    color: #d2a679;
+}
