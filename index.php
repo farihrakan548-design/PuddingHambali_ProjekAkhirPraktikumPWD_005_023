@@ -31,7 +31,12 @@
     </div>
 </nav>
 
-
+<nav class="header">
+    <div class="container text-center">
+        <h1 class="display-4 section-title">Welcome to Pudding Hambali</h1>
+        <p class="lead">Delicious homemade puddings made with love.</p>
+    </div>
+</nav>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
