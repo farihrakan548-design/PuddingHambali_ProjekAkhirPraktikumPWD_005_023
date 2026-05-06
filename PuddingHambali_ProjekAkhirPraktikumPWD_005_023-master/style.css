@@ -25,3 +25,7 @@ body {
     padding: 2rem 0;
     font-weight: bold;
 }
+
+.container-fluid {
+    margin-top: 30px;
+}   
