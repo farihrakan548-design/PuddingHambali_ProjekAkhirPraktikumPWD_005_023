@@ -34,7 +34,7 @@
 <nav class="header">
     <div class="container text-center">
         <h1 class="display-4 section-title">Welcome to Pudding Hambali</h1>
-        <p class="lead">Delicious homemade puddings made with love.</p>
+        <p class="lead">Pudding aseli ngawi. ownernya atlet penari tiang</p>
     </div>
 </nav>
 
