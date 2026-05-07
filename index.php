@@ -31,12 +31,33 @@
     </div>
 </nav>
 
-<nav class="header">
+<section class="header">
     <div class="container text-center">
         <h1 class="display-4 section-title">Welcome to Pudding Hambali</h1>
         <p class="lead">Delicious homemade puddings made with love.</p>
     </div>
-</nav>
+</section>
+
+<div class="container mt-5">
+    <h2 class="text-center mb-4 section-title">Our Puddings</h2>
+    <div class="row g-4">
+        <div class="col-md-3">
+            <div class="card custom-card">
+                <img src="images/puddingcoklat.jpg" class="card-img-top">
+                <div class="card-body text-center">
+                    <h5>Pudding Coklat</h5>
+                    <p>Manis dan lembut.</p>
+                    <button type="button" class="btn btn-secondary">Beli</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
