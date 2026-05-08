@@ -23,7 +23,7 @@
             <ul class="navbar-nav ms-auto">
                 <li class="nav-item"><a class="nav-link" href="#">Products</a></li>
                 <li class="nav-item"><a class="nav-link" href="#">Payment</a></li>
-                <li class="nav-item"><a class="nav-link" href="#">About Us</a></li>
+                <li class="nav-item"><a class="nav-link" href="aboutus.php">About Us</a></li>
                 <li class="nav-item"><a class="nav-link" href="#">Login</a></li>
                 <li class="nav-item"><a class="nav-link" href="#">Register</a></li>
             </ul>
@@ -90,7 +90,9 @@
 </div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
+
 <footer class="custom-footer text-center mt-5 p-3">
     <p>&copy; 2026 Pudding Hambali | All Rights Reserved</p>
 </footer>
+
 </html>
