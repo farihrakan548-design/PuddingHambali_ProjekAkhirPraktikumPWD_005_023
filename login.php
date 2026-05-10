@@ -29,6 +29,35 @@
     </div>
 </nav>
 
+<div class="container d-flex justify-content-center align-items-center vh-100">
+    <div class="login-box">
+
+        <h2 class="text-center mb-4">Login Account</h2>
+
+        <form>
+            <div class="mb-3">
+                <label class="form-label">Email</label>
+                <input type="email" class="form-control" placeholder="Masukkan email">
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Password</label>
+                <input type="password" class="form-control" placeholder="Masukkan password">
+            </div>
+
+            <div class="d-grid">
+                <button type="submit" class="btn custom-btn">Login</button>
+            </div>
+
+            <p class="text-center mt-3">
+                Belum punya akun?
+                <a href="register.php" class="register-link">Register</a>
+            </p>
+
+        </form>
+    </div>
+</div>
+
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
