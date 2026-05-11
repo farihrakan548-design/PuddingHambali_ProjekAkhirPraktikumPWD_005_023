@@ -1,50 +1,44 @@
 @font-face {
     font-family: 'font1';
-    src: url('font/CHICKEN Pie Height.ttf') format('truetype');
-}
-body {
-    background-color: #f5e6d3;
-    font-family:'Segoe UI', sans-serif
+    src: url('PuddingHambali_ProjekAkhirPraktikumPWD_005_023/font/CHICKEN Pie Height.ttf') format('truetype');
 }
 
+body {
+    background-color: #9a6664;
+    font-family: 'Segoe UI', sans-serif;
+}
 .custom-navbar {
-    background-color: #382222;
+    background-color: #654040;
     padding: 15px 0;
+    font-family: 'font1', cursive;
 }
 
 .navbar .nav-link {
-    color: #f5e6d3;
+    font-size: 18px;
+    color: #f5e6d3 !important;
     transition: 0.3s;
-    font-size: 1.1rem;
+    font-family: 'font1', cursive;
 }
 
 .navbar .nav-link:hover {
-    color: #d2a679;
-}
-
-.header {
-    background-color: #3f2929;
-    color: #f5e6d3;
-    padding: 2rem 0;
-    font-weight: bold;
-    font-family: 'font1', sans-serif;
+    color: #d2a679 !important;
 }
 
 .section-title {
-    color: #643e3e;
+    color: #3a2323;
     font-weight: bold;
+    font-family: 'font1', cursive;
 }
 
 .custom-card {
     border: none;
     border-radius: 15px;
+    background-color: #fff8f0;
     overflow: hidden;
     transition: 0.3s;
-    background-color: #fff8f0;
 }
 
 .custom-card:hover {
-    transform: translateY(-10px);
     box-shadow: 0 10px 20px rgba(0,0,0,0.2);
 }
 
@@ -60,18 +54,15 @@ body {
 }
 
 .custom-footer {
-    background-color: #6c4545;
+    background-color: #4b2e2e;
     color: #f5e6d3;
 }
-
-/* Login css */
 .login-box {
     background-color: #fff8f0;
     padding: 40px;
     border-radius: 20px;
     width: 400px;
     box-shadow: 0 8px 20px rgba(0,0,0,0.2);
-    border: 2px solid #000000;
 }
 
 .form-control {
@@ -92,27 +83,4 @@ body {
 
 .register-link:hover {
     color: #a0522d;
-}
-
-/*payment css*/
-/* Payment Card */
-.payment-card {
-    background-color: #fff8f0;
-    padding: 30px;
-    border-radius: 20px;
-    box-shadow: 0 8px 20px rgba(0,0,0,0.15);
-    transition: 0.3s;
-    height: 100%;
-}
-
-.payment-card:hover {
-    transform: translateY(-5px);
-}
-
-/* Judul */
-.payment-title {
-    color: #4b2e2e;
-    font-weight: bold;
-    margin-bottom: 25px;
-    text-align: center;
 }
