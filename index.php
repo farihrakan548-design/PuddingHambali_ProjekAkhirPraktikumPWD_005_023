@@ -39,49 +39,49 @@
 </section>
 
 <div class="container mt-5">
-    <h2 class="text-center mb-4 section-title">Puding Kita</h2>
+    <h2 class="text-center mb-4 section-title">Pudding Kita</h2>
     <div class="row g-4">
-
+    
         <div class="col-md-3">
             <div class="card custom-card">
-                <img src="images/puddingcoklat2.jpg" class="card-img-top">
+                <img src="PuddingHambali_ProjekAkhirPraktikumPWD_005_023/images/puddingcoklat.jpg" class="card-img-top">
                 <div class="card-body text-center">
                     <h5>Pudding Coklat</h5>
                     <p>Manis dan lembut.</p>
-                    <button type="button" class="btn btn-primary">Beli</button>
+                    <button type="button" class="btn btn-primary w-100">Beli</button>
                 </div>
             </div>
         </div>
 
         <div class="col-md-3">
             <div class="card custom-card">
-                <img src="images/puddingstro.jpg" class="card-img-top">
+                <img src="PuddingHambali_ProjekAkhirPraktikumPWD_005_023/images/puddingcaramel.jpg" class="card-img-top">
                 <div class="card-body text-center">
-                    <h5>Pudding Strawberry</h5>
-                    <p>Segar dan fruity.</p>
-                    <button type="button" class="btn btn-primary">Beli</button>
+                    <h5>Pudding Caramel</h5>
+                    <p>Manis dan Gurih.</p>
+                    <button type="button" class="btn btn-primary w-100">Beli</button>
                 </div>
             </div>
         </div>
 
         <div class="col-md-3">
             <div class="card custom-card">
-                <img src="images/puddingmango.jpg" class="card-img-top">
+                <img src="PuddingHambali_ProjekAkhirPraktikumPWD_005_023/images/puddingmangga.jpg" class="card-img-top">
                 <div class="card-body text-center">
                     <h5>Pudding Mangga</h5>
                     <p>Manis alami.</p>
-                    <button type="button" class="btn btn-primary">Beli</button>
+                    <button type="button" class="btn btn-primary w-100">Beli</button>
                 </div>
             </div>
         </div>
 
         <div class="col-md-3">
             <div class="card custom-card">
-                <img src="images/puddingvanilla.jpg" class="card-img-top">
+                <img src="PuddingHambali_ProjekAkhirPraktikumPWD_005_023/images/puddingvanilla.jpg" class="card-img-top">
                 <div class="card-body text-center">
                     <h5>Pudding Vanilla</h5>
                     <p>Rasa klasik.</p>
-                    <button type="button" class="btn btn-primary">Beli</button>
+                    <button type="button" class="btn btn-primary w-100">Beli</button>
                 </div>
             </div>
         </div>
