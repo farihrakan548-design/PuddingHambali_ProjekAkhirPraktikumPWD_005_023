@@ -24,6 +24,10 @@ body {
     color: #d2a679 !important;
 }
 
+html{
+    scroll-behavior: smooth;
+}
+
 .section-title {
     color: #3a2323;
     font-weight: bold;

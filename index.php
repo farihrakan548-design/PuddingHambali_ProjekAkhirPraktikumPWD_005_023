@@ -21,7 +21,7 @@
 
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ms-auto">
-                <li class="nav-item"><a class="nav-link" href="products.php">Products</a></li>
+                <li class="nav-item"><a class="nav-link" href="#products">Products</a></li>
                 <li class="nav-item"><a class="nav-link" href="payment.php">Payment</a></li>
                 <li class="nav-item"><a class="nav-link" href="aboutus.php">About Us</a></li>
                 <li class="nav-item"><a class="nav-link" href="login.php">Login</a></li>
@@ -38,7 +38,7 @@
     </div>
 </section>
 
-<div class="container mt-5">
+<div class="container mt-5" id="products">
     <h2 class="text-center mb-4 section-title">Pudding Kita</h2>
     <div class="row g-4">
     
