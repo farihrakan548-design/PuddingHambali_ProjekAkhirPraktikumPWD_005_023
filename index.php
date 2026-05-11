@@ -39,7 +39,7 @@
 </section>
 
 <div class="container mt-5">
-    <h2 class="text-center mb-4 section-title">Our Puddings</h2>
+    <h2 class="text-center mb-4 section-title">Puding Kita</h2>
     <div class="row g-4">
 
         <div class="col-md-3">
