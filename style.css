@@ -8,7 +8,7 @@ body {
 }
 
 .custom-navbar {
-    background-color: #4b2e2e;
+    background-color: #382222;
     padding: 15px 0;
 }
 
@@ -23,7 +23,7 @@ body {
 }
 
 .header {
-    background-color: #6c4545;
+    background-color: #3f2929;
     color: #f5e6d3;
     padding: 2rem 0;
     font-weight: bold;
@@ -31,7 +31,7 @@ body {
 }
 
 .section-title {
-    color: #4b2e2e;
+    color: #643e3e;
     font-weight: bold;
 }
 
@@ -62,4 +62,57 @@ body {
 .custom-footer {
     background-color: #6c4545;
     color: #f5e6d3;
+}
+
+/* Login css */
+.login-box {
+    background-color: #fff8f0;
+    padding: 40px;
+    border-radius: 20px;
+    width: 400px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+    border: 2px solid #000000;
+}
+
+.form-control {
+    border-radius: 10px;
+    padding: 10px;
+}
+
+.login-box h2 {
+    color: #4b2e2e;
+    font-weight: bold;
+}
+
+.register-link {
+    color: #6b3e26;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.register-link:hover {
+    color: #a0522d;
+}
+
+/*payment css*/
+/* Payment Card */
+.payment-card {
+    background-color: #fff8f0;
+    padding: 30px;
+    border-radius: 20px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+    transition: 0.3s;
+    height: 100%;
+}
+
+.payment-card:hover {
+    transform: translateY(-5px);
+}
+
+/* Judul */
+.payment-title {
+    color: #4b2e2e;
+    font-weight: bold;
+    margin-bottom: 25px;
+    text-align: center;
 }

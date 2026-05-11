@@ -21,11 +21,11 @@
 
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ms-auto">
-                <li class="nav-item"><a class="nav-link" href="#">Products</a></li>
-                <li class="nav-item"><a class="nav-link" href="#">Payment</a></li>
+                <li class="nav-item"><a class="nav-link" href="products.php">Products</a></li>
+                <li class="nav-item"><a class="nav-link" href="payment.php">Payment</a></li>
                 <li class="nav-item"><a class="nav-link" href="aboutus.php">About Us</a></li>
-                <li class="nav-item"><a class="nav-link" href="#">Login</a></li>
-                <li class="nav-item"><a class="nav-link" href="#">Register</a></li>
+                <li class="nav-item"><a class="nav-link" href="login.php">Login</a></li>
+                <li class="nav-item"><a class="nav-link" href="register.php">Register</a></li>
             </ul>
         </div>
     </div>
