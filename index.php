@@ -29,7 +29,7 @@ $produk = mysqli_query($conn, "SELECT * FROM produk");
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item"><a class="nav-link" href="about_us.php">About Us</a></li>
                     <?php if (isset($_SESSION['pengguna'])) { ?>
-                        <li class="nav-item"><a class="nav-link" href="user/keranjang.php">Keranjang</a></li>
+                        <li class="nav-item"><a class="nav-link" href="keranjang.php">Keranjang</a></li>
                         <li class="nav-item"><a class="nav-link" href="profil.php">Profil</a></li>
                         <li class="nav-item"><a class="nav-link" href="logout.php">Logout</a></li>
                     <?php } else { ?>
@@ -50,7 +50,7 @@ $produk = mysqli_query($conn, "SELECT * FROM produk");
 
     <div class="container mt-5" id="products">
         <h2 class="text-center mb-4 section-title">Pudding Kita</h2>
-        <div class="row g-4">
+        <div class="row g-4" id="produk">
             <?php while ($p = mysqli_fetch_assoc($produk)) { ?>
                 <div class="col-md-3">
                     <div class="card custom-card">
@@ -61,8 +61,8 @@ $produk = mysqli_query($conn, "SELECT * FROM produk");
                             <p><?php echo $p['harga']; ?></p>
                             <p><?php echo $p['stok']; ?></p>
                             <p>★ <?php echo $p['rating'] ?></p>
-                            <a href="proses_tambah_keranjang.php?id <?php echo $p['id_produk']; ?>" class="btn custom-btn">🛒</a>
-                            <a href="proses_beli_langsung.php?id <?php echo $p['id_produk']; ?> " class="btn custom-btn">Beli</a>
+                            <a href="proses_tambah_keranjang.php?id=<?php echo $p['id_produk']; ?>" class="btn custom-btn" onclick="return confirm('tambah ke keranjang?')">🛒</a>
+                            <a href="proses_beli_langsung.php?id=<?php echo $p['id_produk']; ?> " class="btn custom-btn">Beli</a>
                         </div>
                     </div>
                 </div>

@@ -1,3 +1,47 @@
+<?php include 'koneksi.php';
+
+if (!isset($_SESSION['pengguna'])) {
+    header("location: login.php");
+    exit;
+}
+
+$id_pengguna = $_SESSION['pengguna']['id_pengguna'];
+$items = mysqli_query($conn, "SELECT keranjang.* produk.harga FROM keranjang JOIN produk ON keranjang.id_produk=produk.id_produk WHERE keranjang.id_pengguna='$id_pengguna';");
+
+$total = 0;
+$itemData = [];
+
+while ($i = mysqli_fetch_assoc($items)) {
+    $itemData[] = $i;
+    $total += $i['harga'] * $i['jumlah'];
+}
+
+if (isset($_POST['checkout'])) {
+    $alamat = $_POST['alamat'];
+    $metode = $_POST['metode'];
+    $catatan = $_POST['catatan'];
+}
+
+$totalAkhir = $total;
+
+mysqli_query($conn, "INSERT INTO pesanan(id_pengguna, total_harga, alamat_pengiriman, metode_pembayaran, catatan) VALUES('$id_pengguna','$totalAkhir','$alamat','$metode','$catatan');");
+$id_pesanan = mysqli_insert_id($conn);
+
+foreach ($itemData as $item) {
+
+    $subtotal = $item['harga'] * $item['jumlah'];
+
+    mysqli_query($conn, "INSERT INTO detail_pesanan(id_pesanan,id_produk,jumlah,subtotal) VALUES('$id_pesanan','{$item[$id_produk]}','{$item['jumlah']}','$subtotal');");
+
+    mysqli_query($conn, "UPDATE produk SET stok = stok - {$item['jumlah']} WHERE id_produk='{$item['id_produk']}';");
+}
+
+mysqli_query($conn, "DELETE FROM keranjang WHERE id_user='$id_user';");
+
+echo "Pesanan berhasil dibuat";
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -11,6 +55,18 @@
 </head>
 
 <body>
+    <form method="POST">
+        <textarea name="alamat" required></textarea>
+        <select name="metode">
+            <option>Transfer Bank</option>
+            <option>E-Wallet</option>
+            <option>COD</option>
+        </select>
+        <input type="text" name="voucher" placeholder="Kode Voucher">
+        <textarea name="catatan"></textarea>
+        <button type="submit" name="checkout">Checkout Sekarang</button>
+    </form>
+
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
