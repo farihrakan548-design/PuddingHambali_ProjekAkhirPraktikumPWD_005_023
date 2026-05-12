@@ -13,12 +13,16 @@ if (isset($_POST['login'])) {
         $_SESSION['pengguna'] = $pengguna;
 
         if ($pengguna['role'] == 'admin') {
-            header("dasboard_admin.php");
+            header("location: dashboard_admin.php");
+            exit;
         } else {
-            header("index.php");
+            header("location: index.php");
+            exit;
         }
     } else {
-        echo "Login gagal rek, keknya ada yang salah.";
+        ?>
+        <p class="section-title mt-2"> <?php echo "Login gagal rek, keknya ada yang salah."; ?> </p>
+        <?php
     }
 }
 ?>
@@ -78,7 +82,7 @@ if (isset($_POST['login'])) {
                                     placeholder="Masukkan password" required>
                             </div>
                             <div class="d-grid">
-                                <button type="button" class="btn btn-primary btn-lg">Login</button>
+                                <button type="submit" name="login" class="btn btn-primary btn-lg">Login</button>
                             </div>
                         </form>
                         <p class="text-center mt-4 mb-0">Belum punya akun?<a href="register.php"
