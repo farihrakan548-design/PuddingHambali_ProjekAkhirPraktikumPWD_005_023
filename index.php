@@ -27,7 +27,7 @@ $produk = mysqli_query($conn, "SELECT * FROM produk");
 
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
-                    <li class="nav-item"><a class="nav-link" href="aboutus.php">About Us</a></li>
+                    <li class="nav-item"><a class="nav-link" href="about_us.php">About Us</a></li>
                     <?php if (isset($_SESSION['pengguna'])) { ?>
                         <li class="nav-item"><a class="nav-link" href="user/keranjang.php">Keranjang</a></li>
                         <li class="nav-item"><a class="nav-link" href="profil.php">Profil</a></li>
@@ -43,64 +43,30 @@ $produk = mysqli_query($conn, "SELECT * FROM produk");
 
     <section class="header">
         <div class="container text-center">
-            <h1 class="display-4 section-title">Welcome to Pudding Hambali</h1>
-            <p class="lead">Pudding lezat aseli ngawi. ownernya Pak Hambali</p>
+            <h1 class="display-4 section-title mt-4">Welcome to Pudding Hambali</h1>
+            <p class="section-title">Pudding lezat aseli ngawi. ownernya Pak Hambali</p>
         </div>
     </section>
 
     <div class="container mt-5" id="products">
         <h2 class="text-center mb-4 section-title">Pudding Kita</h2>
         <div class="row g-4">
-
-            <div class="col-md-3">
-                <div class="card custom-card">
-                    <img src="PuddingHambali_ProjekAkhirPraktikumPWD_005_023/images/puddingcoklat.jpg"
-                        class="card-img-top">
-                    <div class="card-body text-center">
-                        <h5>Pudding Coklat</h5>
-                        <p>Manis dan lembut.</p>
-                        <button type="button" class="btn btn-primary w-100">Beli</button>
+            <?php while ($p = mysqli_fetch_assoc($produk)) { ?>
+                <div class="col-md-3">
+                    <div class="card custom-card">
+                        <img src="<?php echo $p['gambar']; ?>" class="card-img-top">
+                        <div class="card-body text-center">
+                            <h5><?php echo $p['nama_produk']; ?></h5>
+                            <p><?php echo $p['deskripsi']; ?></p>
+                            <p><?php echo $p['harga']; ?></p>
+                            <p><?php echo $p['stok']; ?></p>
+                            <p>★ <?php echo $p['rating'] ?></p>
+                            <a href="proses_tambah_keranjang.php?id <?php echo $p['id_produk']; ?>" class="btn custom-btn">🛒</a>
+                            <a href="proses_beli_langsung.php?id <?php echo $p['id_produk']; ?> " class="btn custom-btn">Beli</a>
+                        </div>
                     </div>
                 </div>
-            </div>
-
-            
-
-            <div class="col-md-3">
-                <div class="card custom-card">
-                    <img src="PuddingHambali_ProjekAkhirPraktikumPWD_005_023/images/puddingcaramel.jpg"
-                        class="card-img-top">
-                    <div class="card-body text-center">
-                        <h5>Pudding Caramel</h5>
-                        <p>Manis dan Gurih.</p>
-                        <button type="button" class="btn btn-primary w-100">Beli</button>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-md-3">
-                <div class="card custom-card">
-                    <img src="PuddingHambali_ProjekAkhirPraktikumPWD_005_023/images/puddingmangga.jpg"
-                        class="card-img-top">
-                    <div class="card-body text-center">
-                        <h5>Pudding Mangga</h5>
-                        <p>Manis alami.</p>
-                        <button type="button" class="btn btn-primary w-100">Beli</button>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-md-3">
-                <div class="card custom-card">
-                    <img src="PuddingHambali_ProjekAkhirPraktikumPWD_005_023/images/puddingvanilla.jpg"
-                        class="card-img-top">
-                    <div class="card-body text-center">
-                        <h5>Pudding Vanilla</h5>
-                        <p>Rasa klasik.</p>
-                        <button type="button" class="btn btn-primary w-100">Beli</button>
-                    </div>
-                </div>
-            </div>
+            <?php } ?>
 
         </div>
     </div>
@@ -108,7 +74,7 @@ $produk = mysqli_query($conn, "SELECT * FROM produk");
 </body>
 
 <footer class="custom-footer text-center mt-5 p-3">
-    <p>&copy; 2026 Pudding Hambali | All Rights Reserved</p>
+    <p>&copy; 2026 Pudding Hambali Termoney money 😹 | All Rights Reserved</p>
 </footer>
 
 </html>

@@ -4,11 +4,11 @@
 }
 
 body {
-    background-color: #9a6664;
+    background-color: #a97f40;
     font-family: 'Segoe UI', sans-serif;
 }
 .custom-navbar {
-    background-color: #654040;
+    background-color: #3a2323;
     padding: 15px 0;
     font-family: 'font1', cursive;
 }
@@ -37,7 +37,7 @@ html{
 .custom-card {
     border: none;
     border-radius: 15px;
-    background-color: #fff8f0;
+    background-color: #ffefd9;
     overflow: hidden;
     transition: 0.3s;
 }
