@@ -8,8 +8,17 @@ if (!isset($_SESSION['pengguna'])) {
 }
 
 $id_pengguna = $_SESSION['pengguna']['id_pengguna'];
-$data = mysqli_query($conn, "SELECT keranjang.*, produk.nama_produk, produk.harga, produk.gambar FROM keranjang JOIN produk ON keranjang.id_produk=produk.id_produk WHERE keranjang.id_pengguna='$id_pengguna';");
+$query = mysqli_query($conn, "
+    SELECT keranjang.*, produk.nama_produk, produk.harga, produk.gambar
+    FROM keranjang
+    JOIN produk ON keranjang.id_produk = produk.id_produk
+    WHERE keranjang.id_pengguna='$id_pengguna'
+");
 
+$data = [];
+while ($row = mysqli_fetch_assoc($query)) {
+    $data[] = $row;
+}
 ?>
 
 <!DOCTYPE html>
@@ -52,34 +61,89 @@ $data = mysqli_query($conn, "SELECT keranjang.*, produk.nama_produk, produk.harg
 
     <div class="container py-5">
         <div class="row g-4">
-            <h2 class="section-title">Keranjang Anda</h2>
-            <table class="table">
-                <thead>
-                    <tr class="table table-warning">
-                        <th scope="col">Produk</th>
-                        <th scope="col">Harga</th>
-                        <th scope="col">Jumlah</th>
-                        <th scope="col">Subtotal</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php
-                    $total = 0;
-                    while ($d = mysqli_fetch_assoc($data)) {
-                        $subtotal = $d['harga'] * $d['jumlah'];
-                        $total += $subtotal;
-                        ?>
-                        <tr>
-                            <td><?php echo $d['nama_produk']; ?></td>
-                            <td><?php echo $d['harga']; ?></td>
-                            <td><?php echo $d['jumlah']; ?></td>
-                            <td><?php echo $subtotal; ?></td>
-                        </tr>
-                    <?php } ?>
-                </tbody>
-                <h3>Total: Rp <?php echo number_format($total) ?> </h3>
-                <a href="checkout.php" class="btn custom-btn">Checkout</a>
-            </table>
+            <div class="card p-4">
+                <div class="card-body">
+                    <h2 class="section-title  text-center">Keranjang Anda</h2>
+                    <div class="row g-4 mt-4 d-flex justify-content-center">
+                        <?php foreach ($data as $p) { ?>
+                            <div class="col-md-3 p-4">
+                                <div class="card custom-card">
+                                    <img src="<?php echo $p['gambar']; ?>" class="card-img-top">
+                                    <div class="card-body text-center">
+                                        <h5 class="section-title"><?php echo $p['nama_produk']; ?></h5>
+                                        <p>Rp. <?php echo $p['harga']; ?></p>
+                                        <p>Jumlah: <?php echo $p['jumlah']; ?></p>
+                                    </div>
+                                </div>
+                            </div>
+                        <?php } ?>
+                    </div>
+
+                    <table class="table">
+                        <thead>
+                            <tr class="table table-warning">
+                                <th scope="col">Produk</th>
+                                <th scope="col">Harga</th>
+                                <th scope="col">Jumlah</th>
+                                <th scope="col">Aksi</th>
+                                <th scope="col">Subtotal</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php
+                            $total = 0;
+                            foreach ($data as $d) {
+                                $subtotal = $d['harga'] * $d['jumlah'];
+                                $total += $subtotal;
+                                ?>
+                                <tr>
+                                    <td><?php echo $d['nama_produk']; ?></td>
+                                    <td>Rp. <?php echo $d['harga']; ?></td>
+                                    <td><?php echo $d['jumlah']; ?></td>
+                
+                                    <td>
+                                        <a href="proses_edit_keranjang.php?id=<?= $d['id_produk']; ?>&aksi=tambah"
+                                            class="btn btn-success btn-sm">
+                                            +
+                                        </a>
+
+                                        <a href="proses_edit_keranjang.php?id=<?= $d['id_produk']; ?>&aksi=kurang"
+                                            class="btn btn-warning btn-sm">
+                                            -
+                                        </a>
+                                    </td>
+                                    <td>Rp. <?php echo $subtotal; ?></td>
+                                </tr>
+                            <?php } ?>
+                        </tbody>
+                    </table>
+                    <p class="section-title">Total: Rp <?php echo number_format($total) ?> </p>
+                    <div class="d-flex justify-content-end gap-2">
+
+                        <?php if (count($data) > 0) { ?>
+
+                            <!-- Jika keranjang ada isi -->
+                            <a href="checkout.php" class="btn custom-btn">
+                                Checkout
+                            </a>
+
+                        <?php } else { ?>
+
+                            <!-- Jika keranjang kosong -->
+                            <button type="button" class="btn custom-btn"
+                                onclick="alert('Keranjang Anda masih kosong. Silakan tambahkan produk terlebih dahulu.')">
+                                Checkout
+                            </button>
+
+                        <?php } ?>
+
+                        <button type="button" class="btn custom-btn bg-dark" onclick="window.history.back()">
+                            Kembali
+                        </button>
+
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 

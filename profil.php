@@ -1,3 +1,17 @@
+<?php
+include 'koneksi.php';
+
+if (!isset($_SESSION['pengguna'])) {
+    header("location: login.php");
+    exit;
+}
+
+$id_pengguna = $_SESSION['pengguna']['id_pengguna'];
+$profil = mysqli_query($conn, "SELECT * FROM pengguna WHERE id_pengguna='$id_pengguna';");
+
+$pengguna = mysqli_fetch_assoc($profil);
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -12,6 +26,77 @@
 
 <body>
 
+    <nav class="navbar navbar-expand-lg navbar-dark custom-navbar">
+        <div class="container">
+            <a class="navbar-brand fw-bold" href="#">Pudding Hambali</a>
+
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="about_us.php">About Us</a></li>
+                    <?php if (isset($_SESSION['pengguna'])) { ?>
+                        <li class="nav-item"><a class="nav-link" href="riwayat_pesanan.php">Riwayat Pesanan</a></li>
+                        <li class="nav-item"><a class="nav-link" href="keranjang.php">Keranjang</a></li>
+                        <li class="nav-item"><a class="nav-link" href="logout.php">Logout</a></li>
+                    <?php } else { ?>
+                        <li class="nav-item"><a class="nav-link" href="login.php">Login</a></li>
+                        <li class="nav-item"><a class="nav-link" href="register.php">Register</a></li>
+                    <?php } ?>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container py-5">
+        <div class="row justify-content-center">
+            <div class="col-md-5">
+                <div class="card border-0 shadow-lg rounded-4">
+                    <h2 class="section-title mt-4 mb-4 text-center">Profil</h2>
+                    <div class="card-body p-5">
+                        <table class="table">
+                            <tr>
+                                <th>ID</th>
+                                <td>:</td>
+                                <td><?php echo $pengguna['id_pengguna']; ?></td>
+                            </tr>
+                            <tr>
+                                <th>Username</th>
+                                <td>:</td>
+                                <td><?php echo $pengguna['username'] ?></td>
+                            </tr>
+                            <tr>
+                                <th>Nama Lengkap</th>
+                                <td>:</td>
+                                <td><?php echo $pengguna['nama_lengkap'] ?></td>
+                            </tr>
+                            <tr>
+                                <th>Email</th>
+                                <td>:</td>
+                                <td><?php echo $pengguna['email'] ?> </td>
+                            </tr>
+                            <tr>
+                                <th>Alamat</th>
+                                <td>:</td>
+                                <td><?php echo $pengguna['alamat'] ?> </td>
+                            </tr>
+                            <tr>
+                                <th>Role</th>
+                                <td>:</td>
+                                <td><?php echo $pengguna['role'] ?></td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                <div class="d-flex justify-content-center mt-4">
+                    <button type="button" class="btn custom-btn bg-dark"
+                        onclick="window.history.back()">Kembali</button>
+                </div>
+            </div>
+        </div>
+    </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
         crossorigin="anonymous"></script>

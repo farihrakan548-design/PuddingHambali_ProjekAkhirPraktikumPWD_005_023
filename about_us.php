@@ -1,3 +1,8 @@
+<?php 
+include 'koneksi.php';
+
+?>
+
 <!doctype html>
 <html lang="en">
 
@@ -35,9 +40,8 @@
         </div>
     </nav>
 
-    <div class="container mt-5">
-
-        <div class="row d-flex justify-content-center gap-4 flex-wrap">
+    <div class="container py-5">
+        <div class="row d-flex justify-content-center gap-4">
             <div class="card shadow" style="width: 18rem;">
                 <img src="PuddingHambali_ProjekAkhirPraktikumPWD_005_023/images/puddingcaramel.jpg" class="card-img-top"
                     alt="...">
@@ -65,7 +69,10 @@
 
                 </div>
             </div>
+            <div class="d-flex justify-content-center mt-4">
+                <button type="button" class="btn custom-btn bg-dark" onclick="window.history.back()">Kembali</button>
 
+            </div>
         </div>
 
     </div>
