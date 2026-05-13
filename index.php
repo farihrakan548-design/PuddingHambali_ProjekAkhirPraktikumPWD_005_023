@@ -62,7 +62,7 @@ $produk = mysqli_query($conn, "SELECT * FROM produk");
                             <p><?php echo $p['stok']; ?></p>
                             <p>★ <?php echo $p['rating'] ?></p>
                             <a href="proses_tambah_keranjang.php?id=<?php echo $p['id_produk']; ?>" class="btn custom-btn" onclick="return confirm('tambah ke keranjang?')">🛒</a>
-                            <a href="proses_beli_langsung.php?id=<?php echo $p['id_produk']; ?> " class="btn custom-btn">Beli</a>
+                            <a href="checkout.php?id=<?php echo $p['id_produk']; ?> " class="btn custom-btn">Beli</a>
                         </div>
                     </div>
                 </div>

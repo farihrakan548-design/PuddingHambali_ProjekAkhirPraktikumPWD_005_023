@@ -6,7 +6,7 @@ if (!isset($_SESSION['pengguna'])) {
 }
 
 $id_pengguna = $_SESSION['pengguna']['id_pengguna'];
-$items = mysqli_query($conn, "SELECT keranjang.* produk.harga FROM keranjang JOIN produk ON keranjang.id_produk=produk.id_produk WHERE keranjang.id_pengguna='$id_pengguna';");
+$items = mysqli_query($conn, "SELECT keranjang.*, produk.harga FROM keranjang JOIN produk ON keranjang.id_produk=produk.id_produk WHERE keranjang.id_pengguna='$id_pengguna';");
 
 $total = 0;
 $itemData = [];
@@ -55,6 +55,31 @@ echo "Pesanan berhasil dibuat";
 </head>
 
 <body>
+
+    <nav class="navbar navbar-expand-lg navbar-dark custom-navbar">
+        <div class="container">
+            <a class="navbar-brand fw-bold" href="#">Pudding Hambali</a>
+
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="about_us.php">About Us</a></li>
+                    <?php if (isset($_SESSION['pengguna'])) { ?>
+                        <li class="nav-item"><a class="nav-link" href="keranjang.php">Keranjang</a></li>
+                        <li class="nav-item"><a class="nav-link" href="profil.php">Profil</a></li>
+                        <li class="nav-item"><a class="nav-link" href="logout.php">Logout</a></li>
+                    <?php } else { ?>
+                        <li class="nav-item"><a class="nav-link" href="login.php">Login</a></li>
+                        <li class="nav-item"><a class="nav-link" href="register.php">Register</a></li>
+                    <?php } ?>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
     <form method="POST">
         <textarea name="alamat" required></textarea>
         <select name="metode">
