@@ -49,6 +49,9 @@ $pesanan = mysqli_query($conn, "
                     <li class="nav-item"><a class="nav-link" href="keranjang.php">Keranjang</a></li>
                     <li class="nav-item"><a class="nav-link" href="profil.php">Profil</a></li>
                     <li class="nav-item"><a class="nav-link" href="logout.php">Logout</a></li>
+                    <?php if (isset($_SESSION['pengguna']) && $_SESSION['pengguna']['role'] == 'admin') { ?>
+                        <li class="nav-item"><a class="nav-link" href="dashboard_admin.php">Admin</a></li>
+                    <?php } ?>
                 </ul>
             </div>
         </div>
@@ -56,7 +59,7 @@ $pesanan = mysqli_query($conn, "
 
     <div class="container py-5">
         <div class="card shadow-lg border-0 rounded-4 p-4">
-            <h2 class="section-title text-center mb-4">Riwayat Pembayaran</h2>
+            <h2 class="section-title text-center mb-4">Riwayat Pesanan</h2>
 
             <?php if (mysqli_num_rows($pesanan) > 0) { ?>
 
@@ -69,6 +72,7 @@ $pesanan = mysqli_query($conn, "
                                 <th>Alamat Pengiriman</th>
                                 <th>Metode Pembayaran</th>
                                 <th>Catatan</th>
+                                <th>Tanggal</th>
                                 <th>Status</th>
                             </tr>
                         </thead>
@@ -83,6 +87,15 @@ $pesanan = mysqli_query($conn, "
                                     </td>
                                     <td><?php echo $p['catatan'] ?: '-'; ?></td>
                                     <td>
+                                        <?php
+                                        if (!empty($p['tanggal'])) {
+                                            echo date('d-m-Y H:i', strtotime($p['tanggal']));
+                                        } else {
+                                            echo '-';
+                                        }
+                                        ?>
+                                    </td>
+                                    <td>
                                         <span class="badge bg-success">
                                             <?php echo $p['status'] ?? 'Diproses'; ?>
                                         </span>
@@ -95,14 +108,14 @@ $pesanan = mysqli_query($conn, "
 
             <?php } else { ?>
 
-                <div class="alert alert-info text-center">
-                    Anda belum memiliki riwayat pembayaran.
+                <div class="alert alert-warning text-center section-title">
+                    Anda belum memiliki riwayat pesanan.
                 </div>
 
             <?php } ?>
 
             <div class="d-flex justify-content-end mt-4">
-                <button type="button" class="btn custom-btn bg-dark" onclick="window.history.back()">Kembali</button>
+                <a type="button" class="btn custom-btn bg-dark" href="index.php">Kembali ke beranda</a>
             </div>
         </div>
     </div>

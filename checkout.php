@@ -91,11 +91,7 @@ if (isset($_POST['checkout'])) {
         WHERE id_pengguna = '$id_pengguna'
     ");
 
-    echo "
-    <script>
-        alert('Pesanan berhasil dibuat!');
-        window.location.href='riwayat_pesanan.php';
-    </script>";
+    header('location: riwayat_pesanan.php');
     exit;
 }
 ?>
@@ -130,6 +126,9 @@ if (isset($_POST['checkout'])) {
                         <li class="nav-item"><a class="nav-link" href="keranjang.php">Keranjang</a></li>
                         <li class="nav-item"><a class="nav-link" href="profil.php">Profil</a></li>
                         <li class="nav-item"><a class="nav-link" href="logout.php">Logout</a></li>
+                        <?php if (isset($_SESSION['pengguna']) && $_SESSION['pengguna']['role'] == 'admin') { ?>
+                            <li class="nav-item"><a class="nav-link" href="dashboard_admin.php">Admin</a></li>
+                        <?php } ?>
                     <?php } else { ?>
                         <li class="nav-item"><a class="nav-link" href="login.php">Login</a></li>
                         <li class="nav-item"><a class="nav-link" href="register.php">Register</a></li>
@@ -145,6 +144,7 @@ if (isset($_POST['checkout'])) {
                 <div class="card border-0 shadow-lg rounded-4">
                     <div class="card-body p-5">
                         <h2 class="section-title mb-4 text-center">Checkout</h2>
+                        <p class="section-title">Total: <?php echo number_format($total); ?></p>
                         <form method="POST">
                             <div class="mb-3">
                                 <label class="form-label fw-semibold">Alamat Pengiriman</label>

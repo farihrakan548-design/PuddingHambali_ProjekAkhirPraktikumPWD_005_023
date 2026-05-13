@@ -41,6 +41,9 @@ $pengguna = mysqli_fetch_assoc($profil);
                         <li class="nav-item"><a class="nav-link" href="riwayat_pesanan.php">Riwayat Pesanan</a></li>
                         <li class="nav-item"><a class="nav-link" href="keranjang.php">Keranjang</a></li>
                         <li class="nav-item"><a class="nav-link" href="logout.php">Logout</a></li>
+                        <?php if (isset($_SESSION['pengguna']) && $_SESSION['pengguna']['role'] == 'admin') { ?>
+                            <li class="nav-item"><a class="nav-link" href="dashboard_admin.php">Admin</a></li>
+                        <?php } ?>
                     <?php } else { ?>
                         <li class="nav-item"><a class="nav-link" href="login.php">Login</a></li>
                         <li class="nav-item"><a class="nav-link" href="register.php">Register</a></li>
