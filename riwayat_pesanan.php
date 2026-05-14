@@ -18,7 +18,7 @@ $pesanan = mysqli_query($conn, "
     LEFT JOIN metode_pembayaran 
         ON pesanan.id_metode = metode_pembayaran.id_metode
     WHERE pesanan.id_pengguna = '$id_pengguna'
-    ORDER BY pesanan.id_pesanan DESC
+    ORDER BY pesanan.id_pesanan DESC;
 ");
 ?>
 
@@ -59,7 +59,7 @@ $pesanan = mysqli_query($conn, "
 
     <div class="container py-5">
         <div class="card shadow-lg border-0 rounded-4 p-4">
-            <h2 class="section-title text-center mb-4">Riwayat Pesanan</h2>
+            <h2 class="section-title text-center mb-4">Pesanan Anda</h2>
 
             <?php if (mysqli_num_rows($pesanan) > 0) { ?>
 
