@@ -78,7 +78,7 @@ $produk = mysqli_query($conn, "SELECT * FROM produk WHERE stok > 0");
 </body>
 
 <footer class="custom-footer text-center mt-5 p-3">
-    <p>&copy; 2026 Pudding Hambali Termoney money 😹 | All Rights Reserved</p>
+    <p>&copy; 2026 Pudding Hambali Termoney-money 😹 | All Rights Reserved</p>
 </footer>
 
 </html>

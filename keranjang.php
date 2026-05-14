@@ -66,79 +66,80 @@ while ($row = mysqli_fetch_assoc($query)) {
         <div class="row g-4">
             <div class="card p-4">
                 <div class="card-body">
-                    <h2 class="section-title  text-center">Keranjang Anda</h2>
-                    <div class="row g-4 mt-4 d-flex justify-content-center">
-                        <?php foreach ($data as $p) { ?>
-                            <div class="col-md-3 p-4">
-                                <div class="card custom-card">
-                                    <img src="<?php echo $p['gambar']; ?>" class="card-img-top">
-                                    <div class="card-body text-center">
-                                        <h5 class="section-title"><?php echo $p['nama_produk']; ?></h5>
-                                        <p>Rp. <?php echo $p['harga']; ?></p>
-                                        <p>Jumlah: <?php echo $p['jumlah']; ?></p>
+                    <h2 class="section-title  text-center mb-4">Keranjang Anda</h2>
+                    <?php if (count($data) == 0) { ?>
+
+                        <div class="alert alert-warning text-center section-title">
+                            Keranjang anda masih kosong
+                        </div>
+
+                    <?php } else { ?>
+
+                        <div class="row g-4 mt-4 d-flex justify-content-center">
+                            <?php foreach ($data as $p) { ?>
+                                <div class="col-md-3 p-4">
+                                    <div class="card custom-card">
+                                        <img src="<?php echo $p['gambar']; ?>" class="card-img-top">
+                                        <div class="card-body text-center">
+                                            <h5 class="section-title"><?php echo $p['nama_produk']; ?></h5>
+                                            <p>Rp. <?php echo $p['harga']; ?></p>
+                                            <p>Jumlah: <?php echo $p['jumlah']; ?></p>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        <?php } ?>
-                    </div>
-
-                    <table class="table">
-                        <thead>
-                            <tr class="table table-warning">
-                                <th scope="col">Produk</th>
-                                <th scope="col">Harga</th>
-                                <th scope="col">Jumlah</th>
-                                <th scope="col">Aksi</th>
-                                <th scope="col">Subtotal</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <?php
-                            $total = 0;
-                            foreach ($data as $d) {
-                                $subtotal = $d['harga'] * $d['jumlah'];
-                                $total += $subtotal;
-                                ?>
-                                <tr>
-                                    <td><?php echo $d['nama_produk']; ?></td>
-                                    <td>Rp. <?php echo $d['harga']; ?></td>
-                                    <td><?php echo $d['jumlah']; ?></td>
-                
-                                    <td>
-                                        <a href="proses_edit_keranjang.php?id=<?= $d['id_produk']; ?>&aksi=tambah"
-                                            class="btn btn-success btn-sm">
-                                            +
-                                        </a>
-
-                                        <a href="proses_edit_keranjang.php?id=<?= $d['id_produk']; ?>&aksi=kurang"
-                                            class="btn btn-warning btn-sm">
-                                            -
-                                        </a>
-                                    </td>
-                                    <td>Rp. <?php echo $subtotal; ?></td>
-                                </tr>
                             <?php } ?>
-                        </tbody>
-                    </table>
-                    <p class="section-title">Total: Rp <?php echo number_format($total) ?> </p>
-                    <div class="d-flex justify-content-end gap-2">
+                        </div>
 
-                        <?php if (count($data) > 0) { ?>
+                        <table class="table">
+                            <thead>
+                                <tr class="table table-warning">
+                                    <th scope="col">Produk</th>
+                                    <th scope="col">Harga</th>
+                                    <th scope="col">Jumlah</th>
+                                    <th scope="col">Aksi</th>
+                                    <th scope="col">Subtotal</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php
+                                $total = 0;
+                                foreach ($data as $d) {
+                                    $subtotal = $d['harga'] * $d['jumlah'];
+                                    $total += $subtotal;
+                                    ?>
+                                    <tr>
+                                        <td><?php echo $d['nama_produk']; ?></td>
+                                        <td>Rp. <?php echo $d['harga']; ?></td>
+                                        <td><?php echo $d['jumlah']; ?></td>
+
+                                        <td>
+                                            <a href="proses_edit_keranjang.php?id=<?= $d['id_produk']; ?>&aksi=tambah"
+                                                class="btn btn-success btn-sm">
+                                                +
+                                            </a>
+
+                                            <a href="proses_edit_keranjang.php?id=<?= $d['id_produk']; ?>&aksi=kurang"
+                                                class="btn btn-warning btn-sm">
+                                                -
+                                            </a>
+                                        </td>
+                                        <td>Rp. <?php echo $subtotal; ?></td>
+                                    </tr>
+                                <?php } ?>
+                            </tbody>
+                        </table>
+                        <p class="section-title">Total: Rp <?php echo number_format($total) ?> </p>
+
+                        <div class="d-flex justify-content-end gap-2">
 
                             <!-- Jika keranjang ada isi -->
                             <a href="checkout.php" class="btn custom-btn">
                                 Checkout
                             </a>
 
-                        <?php } else { ?>
-
-                            <!-- Jika keranjang kosong -->
-                            <button type="button" class="btn custom-btn"
-                                onclick="alert('Keranjang Anda masih kosong. Silakan tambahkan produk terlebih dahulu.')">
-                                Checkout
-                            </button>
-
-                        <?php } ?>
+                        </div>
+                    <?php } ?>
+                    <div class="d-flex justify-content-end gap-2 mt-2">
 
                         <button type="button" class="btn custom-btn bg-dark" onclick="window.history.back()">
                             Kembali

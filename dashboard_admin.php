@@ -16,7 +16,7 @@ if ($_SESSION['pengguna']['role'] != 'admin') {
     exit;
 }
 
-/* Update status pesanan */
+/* Buat ngupdate status pesanan */
 if (isset($_POST['update_status'])) {
 
     $id_pesanan = $_POST['id_pesanan'];
@@ -32,7 +32,7 @@ if (isset($_POST['update_status'])) {
     exit;
 }
 
-/* Ambil semua data pesanan */
+/* Query buat ngambil data pesanan di database */
 $pesanan = mysqli_query($conn, "
     SELECT 
         pesanan.*,
@@ -98,9 +98,9 @@ $pesanan = mysqli_query($conn, "
             <table class="table">
                 <thead class="table-warning text-center">
                     <tr>
-                        <th>ID Pesanan</th>
+                        <th>ID</th>
                         <th>Username</th>
-                        <th>Total Harga</th>
+                        <th>Total</th>
                         <th>Alamat</th>
                         <th>Pembayaran</th>
                         <th>Catatan</th>
@@ -170,7 +170,7 @@ $pesanan = mysqli_query($conn, "
 
                                     <button type="submit"
                                         name="update_status"
-                                        class="btn btn-custom ">
+                                        class="btn custom-btn">
                                         Update
                                     </button>
                                 </form>
