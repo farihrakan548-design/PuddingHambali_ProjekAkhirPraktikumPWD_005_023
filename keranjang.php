@@ -132,7 +132,6 @@ while ($row = mysqli_fetch_assoc($query)) {
 
                         <div class="d-flex justify-content-end gap-2">
 
-                            <!-- Jika keranjang ada isi -->
                             <a href="checkout.php" class="btn custom-btn">
                                 Checkout
                             </a>
