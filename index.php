@@ -66,7 +66,7 @@ $produk = mysqli_query($conn, "SELECT * FROM produk WHERE stok > 0");
                             <p>Rp. <?php echo $p['harga']; ?></p>
                             <p>Stok: <?php echo $p['stok']; ?></p>
                             <a href="proses_tambah_keranjang.php?id=<?php echo $p['id_produk']; ?>" class="btn custom-btn"
-                                onclick="return confirm('tambah ke keranjang?')">Tambah ke keranjang</a>
+                                onclick="return confirm('tambah ke keranjang?')">Tambah ke Keranjang</a>
                         </div>
                     </div>
                 </div>
