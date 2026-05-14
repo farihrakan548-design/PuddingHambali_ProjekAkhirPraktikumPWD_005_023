@@ -47,6 +47,7 @@ $pesanan = mysqli_query($conn, "
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item"><a class="nav-link" href="index.php">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="about_us.php">About Us</a></li>
                     <li class="nav-item"><a class="nav-link" href="keranjang.php">Keranjang</a></li>
                     <li class="nav-item"><a class="nav-link" href="profil.php">Profil</a></li>
                     <li class="nav-item"><a class="nav-link" href="logout.php">Logout</a></li>
