@@ -47,7 +47,7 @@ $produk = mysqli_query($conn, "SELECT * FROM produk WHERE stok > 0");
 
     <section class="header">
         <div class="container text-center">
-            <h1 class="display-4 section-title mt-4">Welcome to Pudding Hambali</h1>
+            <h1 class="display-4 section-title mt-4">Pudding Hambali Termoney-Money</h1>
             <p class="section-title">Pudding lezat aseli ngawi punyanya Pak Hambali</p>
         </div>
     </section>
