@@ -96,7 +96,7 @@ $pesanan = mysqli_query($conn, "
 
         <div class="table-responsive">
             <table class="table">
-                <thead class="table-warning text-center">
+                <thead class="table-warning">
                     <tr>
                         <th>ID</th>
                         <th>Username</th>
@@ -181,8 +181,15 @@ $pesanan = mysqli_query($conn, "
 
                 </tbody>
             </table>
+            
         </div>
 
+        <div class="d-flex justify-content-end gap-2 mt-2">
+                        <button type="button" class="btn custom-btn bg-dark" onclick="window.history.back()">
+                            Kembali
+                        </button>
+
+        </div>
     </div>
 
 </div>

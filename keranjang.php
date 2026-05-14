@@ -141,9 +141,9 @@ while ($row = mysqli_fetch_assoc($query)) {
                     <?php } ?>
                     <div class="d-flex justify-content-end gap-2 mt-2">
 
-                        <button type="button" class="btn custom-btn bg-dark" onclick="window.history.back()">
-                            Kembali
-                        </button>
+                        <a type="button" class="btn custom-btn bg-dark" href="index.php">
+                            Kembali ke beranda
+                        </a>
 
                     </div>
                 </div>
