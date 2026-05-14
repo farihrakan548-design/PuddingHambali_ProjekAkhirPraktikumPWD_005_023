@@ -71,6 +71,7 @@ $pesanan = mysqli_query($conn, "
 
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="index.php">Home</a></li>
                     <li class="nav-item"><a class="nav-link" href="about_us.php">About Us</a></li>
                     <?php if (isset($_SESSION['pengguna'])) { ?>
                     <li class="nav-item"><a class="nav-link" href="riwayat_pesanan.php">Riwayat Pesanan</a></li>
@@ -184,10 +185,10 @@ $pesanan = mysqli_query($conn, "
             
         </div>
 
-        <div class="d-flex justify-content-end gap-2 mt-2">
-                        <button type="button" class="btn custom-btn bg-dark" onclick="window.history.back()">
-                            Kembali
-                        </button>
+        <div class="d-flex justify-content-center gap-2 mt-2">
+                        <a href="index.php" type="button" class="btn custom-btn bg-dark">
+                            Beranda
+                        </a>
 
         </div>
     </div>

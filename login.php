@@ -3,30 +3,39 @@ include 'koneksi.php';
 
 if (isset($_POST['login'])) {
 
-    $username = $_POST['username'];
-    $password = MD5($_POST['password']);
+    $username = trim($_POST['username']);
+    $password_input = trim($_POST['password']);
 
-    $query = mysqli_query($conn, "SELECT * FROM pengguna WHERE username='$username' AND password='$password';");
+    if (empty($username) || empty($password_input)) {
+        header("Location: login.php?error=kosong");
+        exit;
+    }
+
+    $password = md5($password_input);
+
+    $query = mysqli_query($conn, "
+        SELECT * FROM pengguna 
+        WHERE username='$username' 
+        AND password='$password'
+    ");
 
     if (mysqli_num_rows($query) > 0) {
         $pengguna = mysqli_fetch_assoc($query);
         $_SESSION['pengguna'] = $pengguna;
 
         if ($pengguna['role'] == 'admin') {
-            header("location: dashboard_admin.php");
+            header("Location: dashboard_admin.php");
             exit;
         } else {
-            header("location: index.php");
+            header("Location: index.php");
             exit;
         }
     } else {
-        ?>
-        <p class="section-title mt-2"> <?php echo "Login gagal rek, keknya ada yang salah."; ?> </p>
-        <?php
+        header("Location: login.php?error=salah");
+        exit;
     }
 }
 ?>
-
 
 <!DOCTYPE html>
 <html lang="id">
@@ -70,6 +79,11 @@ if (isset($_POST['login'])) {
                 <div class="card border-0 shadow-lg rounded-4">
                     <div class="card-body p-5">
                         <h2 class="text-center fw-bold text-brown mb-4"> Login Account</h2>
+                        <?php if (isset($_GET['error'])): ?>
+                            <div class="alert alert-danger">
+                                Username atau password salah / tidak boleh kosong!
+                            </div>
+                        <?php endif; ?>
                         <form method="POST">
                             <div class="mb-3">
                                 <label class="form-label fw-semibold">Username</label>

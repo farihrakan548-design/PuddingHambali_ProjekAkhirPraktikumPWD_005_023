@@ -36,6 +36,7 @@ $pengguna = mysqli_fetch_assoc($profil);
 
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="index.php">Home</a></li>
                     <li class="nav-item"><a class="nav-link" href="about_us.php">About Us</a></li>
                     <?php if (isset($_SESSION['pengguna'])) { ?>
                         <li class="nav-item"><a class="nav-link" href="riwayat_pesanan.php">Riwayat Pesanan</a></li>

@@ -13,7 +13,8 @@ $pesanan = mysqli_query($conn, "
     SELECT 
         pesanan.*,
         metode_pembayaran.nama_metode,
-        metode_pembayaran.jenis
+        metode_pembayaran.jenis,
+        metode_pembayaran.nomor_tujuan
     FROM pesanan
     LEFT JOIN metode_pembayaran 
         ON pesanan.id_metode = metode_pembayaran.id_metode
@@ -58,66 +59,88 @@ $pesanan = mysqli_query($conn, "
     </nav>
 
     <div class="container py-5">
-        <div class="card shadow-lg border-0 rounded-4 p-4">
-            <h2 class="section-title text-center mb-4">Pesanan Anda</h2>
 
-            <?php if (mysqli_num_rows($pesanan) > 0) { ?>
+        <h2 class="section-title text-center mb-4">Pesanan Anda</h2>
 
-                <div class="table-responsive">
-                    <table class="table">
-                        <thead class="table-warning">
-                            <tr>
-                                <th>ID Pesanan</th>
-                                <th>Total Harga</th>
-                                <th>Alamat Pengiriman</th>
-                                <th>Metode Pembayaran</th>
-                                <th>Catatan</th>
-                                <th>Tanggal</th>
-                                <th>Status</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <?php while ($p = mysqli_fetch_assoc($pesanan)) { ?>
-                                <tr>
-                                    <td>#<?php echo $p['id_pesanan']; ?></td>
-                                    <td>Rp <?php echo number_format($p['total_harga']); ?></td>
-                                    <td><?php echo $p['alamat_pengiriman']; ?></td>
-                                    <td>
-                                        <?php echo $p['jenis']; ?> - <?php echo $p['nama_metode']; ?>
-                                    </td>
-                                    <td><?php echo $p['catatan'] ?: '-'; ?></td>
-                                    <td>
-                                        <?php
-                                        if (!empty($p['tanggal'])) {
-                                            echo date('d-m-Y H:i', strtotime($p['tanggal']));
-                                        } else {
-                                            echo '-';
-                                        }
-                                        ?>
-                                    </td>
-                                    <td>
-                                        <span class="badge bg-success">
-                                            <?php echo $p['status'] ?? 'Diproses'; ?>
-                                        </span>
-                                    </td>
-                                </tr>
-                            <?php } ?>
-                        </tbody>
-                    </table>
+        <?php if (mysqli_num_rows($pesanan) > 0) { ?>
+
+
+            <?php while ($p = mysqli_fetch_assoc($pesanan)) { ?>
+                <div class="card shadow-lg border-0 rounded-4 p-2 mb-4">
+                    <div class="card-body">
+                        <h4 class="section-title">ID Pesanan #<?php echo $p['id_pesanan']; ?></h4>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <table class="table table-borderless">
+                                    <tr>
+                                        <th>Total Harga</th>
+                                        <th>: </th>
+                                        <td>Rp <?php echo number_format($p['total_harga']); ?></td>
+                                    </tr>
+                                    <tr>
+                                        <th>Alamat Pengiriman</th>
+                                        <th>: </th>
+                                        <td><?php echo $p['alamat_pengiriman']; ?></td>
+                                    </tr>
+                                    <tr>
+                                        <th>Metode Pembayaran</th>
+                                        <th>: </th>
+                                        <td>
+                                            <?php echo $p['jenis']; ?> - <?php echo $p['nama_metode']; ?>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>Nomor Tujuan</th>
+                                        <th>: </th>
+                                        <td><?php echo $p['nomor_tujuan']; ?></td>
+                                    </tr>
+                                    <tr>
+                                        <th>Catatan Anda</th>
+                                        <th>: </th>
+                                        <td><?php echo $p['catatan'] ?: '-'; ?></td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <div class="col-md-6 text-end">
+                                <div>
+                                    <span class="badge bg-success">
+                                        <?php echo $p['status'] ?? 'Diproses'; ?>
+                                    </span>
+                                </div>
+                                <div>
+                                    <?php
+                                    if (!empty($p['tanggal'])) {
+                                        echo date('d-m-Y H:i', strtotime($p['tanggal']));
+                                    } else {
+                                        echo '-';
+                                    }
+                                    ?>
+                                </div>
+                            </div>
+                        </div>
+                        <?php if ($p['status'] == 'Diproses') { ?>
+                            <p class="section-title">Catatan: Mohon untuk melakukan pembayaran sesuai dengan metode yang dipilih
+                                pada saat
+                                pesanan diproses</p>
+                        <?php } ?>
+                    </div>
                 </div>
-
-            <?php } else { ?>
-
-                <div class="alert alert-warning text-center section-title">
-                    Anda belum memiliki riwayat pesanan.
-                </div>
-
             <?php } ?>
 
-            <div class="d-flex justify-content-end mt-4">
-                <a type="button" class="btn custom-btn bg-dark" href="index.php">Kembali ke beranda</a>
+
+
+        <?php } else { ?>
+
+            <div class="alert alert-warning text-center section-title">
+                Anda belum memiliki riwayat pesanan.
             </div>
+
+        <?php } ?>
+
+        <div class="d-flex justify-content-center mt-4">
+            <a type="button" class="btn custom-btn bg-dark" href="index.php">Kembali ke beranda</a>
         </div>
+
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>

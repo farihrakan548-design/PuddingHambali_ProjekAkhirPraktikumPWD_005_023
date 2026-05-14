@@ -48,6 +48,7 @@ while ($row = mysqli_fetch_assoc($query)) {
                     <li class="nav-item"><a class="nav-link" href="index.php">Home</a></li>
                     <li class="nav-item"><a class="nav-link" href="about_us.php">About Us</a></li>
                     <?php if (isset($_SESSION['pengguna'])) { ?>
+                        <li class="nav-item"><a class="nav-link" href="riwayat_pesanan.php">Riwayat Pesanan</a></li>
                         <li class="nav-item"><a class="nav-link" href="profil.php">Profil</a></li>
                         <li class="nav-item"><a class="nav-link" href="logout.php">Logout</a></li>
                         <?php if (isset($_SESSION['pengguna']) && $_SESSION['pengguna']['role'] == 'admin') { ?>
