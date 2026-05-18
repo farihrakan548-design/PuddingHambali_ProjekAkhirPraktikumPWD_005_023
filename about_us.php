@@ -44,43 +44,32 @@ include 'koneksi.php';
         </div>
     </nav>
 
-    <div class="container py-5">
-        <div class="row d-flex justify-content-center gap-4">
-            <div class="card shadow" style="width: 18rem;">
-                <img src="PuddingHambali_ProjekAkhirPraktikumPWD_005_023/images/puddingcaramel.jpg" class="card-img-top"
-                    alt="...">
-                <div class="card-body">
-                    <p class="card-text">
-                        Nama : Farih Rakan Abqori <br>
-                        NIM : 124250005 <br>
-                        Kelas : SI-A
-                    </p>
+ <div class="container mt-5" id="products">
 
+    <div class="row justify-content-center g-4">
+
+        <div class="col-md-3">
+            <div class="card custom-card h-100 shadow">
+                <img src="PuddingHambali_ProjekAkhirPraktikumPWD_005_023/images/puddingcaramel.jpg"class="card-img-top"alt="005">
+                <div class="card-body text-center">
+                    <h5>Farih Rakan Abqori</h5>
+                    <p>NIM : 124250005</p>
+                    <p>Kelas : SI-A</p>
                 </div>
-            </div>
-            <div class="card shadow" style="width: 18rem;">
-
-                <img src="PuddingHambali_ProjekAkhirPraktikumPWD_005_023/images/puddingcaramel.jpg" class="card-img-top"
-                    alt="...">
-
-                <div class="card-body">
-
-                    <p class="card-text">
-                        Nama : Arsi Candra Kusuma <br>
-                        NIM : 124250023 <br>
-                        Kelas : SI-A
-                    </p>
-
-                </div>
-            </div>
-            <div class="d-flex justify-content-center mt-4">
-                <button type="button" class="btn custom-btn bg-dark" onclick="window.history.back()">Kembali</button>
-
             </div>
         </div>
-
+        <div class="col-md-3">
+            <div class="card custom-card h-100 shadow">
+                <img src="PuddingHambali_ProjekAkhirPraktikumPWD_005_023/images/puddingcaramel.jpg"class="card-img-top"alt="023">
+                <div class="card-body text-center">
+                    <h5>Arsi Candra Kusuma</h5>
+                    <p>NIM : 124250023</p>
+                    <p>Kelas : SI-A</p>
+                </div>
+            </div>
+        </div>
     </div>
-
+</div>
     <footer class="custom-footer text-center mt-5 p-4">
         <div class="container">
             <h5 class="fw-bold mb-2">Pudding Hambali</h5>
