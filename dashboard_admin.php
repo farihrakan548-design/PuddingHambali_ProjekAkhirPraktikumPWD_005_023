@@ -33,6 +33,21 @@ if (isset($_POST['update_status'])) {
     exit;
 }
 
+if (isset($_POST['update_stok'])) {
+
+    $id_produk = $_POST['id_produk'];
+    $stok = $_POST['stok'];
+
+    mysqli_query($conn, "
+        UPDATE produk
+        SET stok = '$stok'
+        WHERE id_produk = '$id_produk'
+    ");
+
+    header("Location: dashboard_admin.php");
+    exit;
+}
+
 /* buat nampilin data pesanan lengkap dengan username dan metode pembayaran */
 $pesanan = mysqli_query($conn, "
     SELECT 
@@ -45,6 +60,11 @@ $pesanan = mysqli_query($conn, "
     LEFT JOIN metode_pembayaran 
         ON pesanan.id_metode = metode_pembayaran.id_metode
     ORDER BY pesanan.id_pesanan DESC;
+");
+
+$produk = mysqli_query($conn, "
+    SELECT * FROM produk
+    ORDER BY id_produk DESC
 ");
 
 ?>
@@ -198,17 +218,76 @@ $pesanan = mysqli_query($conn, "
 
                 </tbody>
             </table>
-            
+        
         </div>
-
         <div class="d-flex justify-content-center gap-2 mt-2">
                         <a href="index.php" type="button" class="btn custom-btn bg-dark">
                             Beranda
                         </a>
-
         </div>
     </div>
+</div>
+<div class="container py-5">
 
+    <div class="card shadow-lg border-0 rounded-4 p-4">
+        <h2 class="section-title text-center mb-4">Stok Produk</h2>
+
+        <div class="table-responsive">
+            <table class="table">
+                <thead class="table-warning">
+                    <tr>
+                        <th>ID</th>
+                        <th>Gambar</th>
+                        <th>Nama Produk</th>
+                        <th>Harga</th>
+                        <th>Stok</th>
+                        <th>Update</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    <?php while ($p = mysqli_fetch_assoc($produk)) { ?>
+
+                        <tr>
+                            <td>#<?php echo $p['id_produk']; ?></td>
+                            <td>
+                                <img src="<?php echo $p['gambar']; ?>" width="80" class="rounded">
+                            </td>
+                            <td><?php echo $p['nama_produk']; ?></td>
+                            <td>Rp <?php echo number_format($p['harga']); ?></td>
+                            <td><?php if ($p['stok'] > 0){ ?>
+                                <span class="badge bg-success">
+                                    <?php echo $p['stok']; ?>
+                                </span>
+                             <?php } else { ?>
+                                <span class="badge bg-danger">Habis</span>
+                            <?php } ?></td>
+                            <td>
+                            <form method="POST" class="d-flex gap-2">
+                                <input type="hidden"
+                                       name="id_produk"
+                                       value="<?php echo $p['id_produk']; ?>">
+                                <input type="number"
+                                       name="stok"
+                                       class="form-control"
+                                       value="<?php echo $p['stok']; ?>"
+                                       min="0"
+                                       required>
+                                <button type="submit"
+                                        name="update_stok"
+                                        class="btn custom-btn">Update
+                                </button>
+                            </form>
+                        </td>
+                    </tr>
+                    <?php } ?>
+                </tbody>
+            </table>
+        </div>
+        <div class="d-flex justify-content-center gap-2 mt-2">
+                        <a href="index.php" type="button" class="btn custom-btn bg-dark">Beranda</a>
+        </div>
+    </div>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
