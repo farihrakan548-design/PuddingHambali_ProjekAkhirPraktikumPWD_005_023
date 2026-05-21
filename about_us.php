@@ -60,7 +60,7 @@ include 'koneksi.php';
         </div>
         <div class="col-md-3">
             <div class="card custom-card h-100 shadow">
-                <img src="PuddingHambali_ProjekAkhirPraktikumPWD_005_023/images/puddingcaramel.jpg"class="card-img-top"alt="023">
+                <img src="PuddingHambali_ProjekAkhirPraktikumPWD_005_023/images/puddingcaramel.jpg" class="card-img-top"alt="023">
                 <div class="card-body text-center">
                     <h5>Arsi Candra Kusuma</h5>
                     <p>NIM : 124250023</p>

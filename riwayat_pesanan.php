@@ -166,22 +166,37 @@ $pesanan = mysqli_query($conn, "
                         <?php if ($p['status'] == 'Diproses') { ?>
 
                             <div class="d-flex justify-content-end mt-3">
-                                <a href="proses_ubah_status_pesanan.php?batal=<?php echo $p['id_pesanan']; ?>" class="btn btn-danger" onclick="return confirm('Apakah Anda yakin ingin membatalkan pesanan ini?');">
+                                <a href="proses_ubah_status_pesanan.php?batal=<?php echo $p['id_pesanan']; ?>"
+                                    class="btn btn-danger"
+                                    onclick="return confirm('Apakah Anda yakin ingin membatalkan pesanan ini?');">
                                     Batalkan Pesanan
                                 </a>
                             </div>
-                            <?php if ($p['jenis'] != 'COD') { ?>
-                                <p class="section-title mt-3">
-                                    Catatan: Mohon untuk melakukan pembayaran sesuai dengan metode yang dipilih
+                            <?php if ($p['nama_metode'] != 'COD') { ?>
+                                <p class="section-title mt-3">Catatan: </p>
+                                <p class="section-title">
+                                    Mohon untuk melakukan pembayaran sesuai dengan metode yang dipilih
                                     pada saat
-                                    pesanan diproses agar pesanan dapat segera dikirimkan. Terima kasih!
-                                </p>
-                            <?php } ?>
+                                    pesanan diproses agar pesanan dapat segera dikirimkan. Terima kasih :)
+                                </p><?php }
 
-                        <?php }
+                            if ($p['nama_metode'] == 'COD') {
+                                if ($p['status'] != 'selesai' && $p['status'] != 'Dibatalkan') {
+                                    ?>
+                                    <p class="section-title mt-3">Catatan: </p>
+                                    <p class="section-title">
+                                        Pesanan Anda akan dibayar saat barang sampai di tempat tujuan. Pastikan untuk
+                                        menyiapkan pembayaran sesuai dengan total harga pesanan. Terima kasih :)
+                                    </p> <?php }
+                            }
+
+                        }
+
                         if ($p['status'] == 'Dibatalkan') { ?>
                             <div class="d-flex justify-content-end mt-3">
-                                <a href="proses_ubah_status_pesanan.php?beli_lagi=<?php echo $p['id_pesanan']; ?>" class="btn btn-success" onclick="return confirm('Apakah Anda yakin ingin membeli lagi pesanan ini?');">
+                                <a href="proses_ubah_status_pesanan.php?beli_lagi=<?php echo $p['id_pesanan']; ?>"
+                                    class="btn btn-success"
+                                    onclick="return confirm('Apakah Anda yakin ingin membeli lagi pesanan ini?');">
                                     Beli Lagi
                                 </a>
                             </div>
@@ -189,16 +204,14 @@ $pesanan = mysqli_query($conn, "
 
                     </div>
                 </div>
+
             <?php } ?>
-
-
 
         <?php } else { ?>
 
             <div class="alert alert-warning text-center section-title">
                 Anda belum memiliki riwayat pesanan.
             </div>
-
         <?php } ?>
 
         <div class="d-flex justify-content-center mt-4">

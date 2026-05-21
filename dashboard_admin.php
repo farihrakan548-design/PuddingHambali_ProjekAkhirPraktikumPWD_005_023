@@ -7,7 +7,6 @@ if (!isset($_SESSION['pengguna'])) {
     exit;
 }
 
-/* buat ngecek role pengguna, kalau bukan admin, langsung tolak akses */
 if ($_SESSION['pengguna']['role'] != 'admin') {
     echo "
     <script>
@@ -48,7 +47,7 @@ if (isset($_POST['update_stok'])) {
     exit;
 }
 
-/* buat nampilin data pesanan lengkap dengan username dan metode pembayaran */
+/* Query buat ngambil data pesanan di database */
 $pesanan = mysqli_query($conn, "
     SELECT 
         pesanan.*,
@@ -59,7 +58,7 @@ $pesanan = mysqli_query($conn, "
     JOIN pengguna ON pesanan.id_pengguna = pengguna.id_pengguna
     LEFT JOIN metode_pembayaran 
         ON pesanan.id_metode = metode_pembayaran.id_metode
-    ORDER BY pesanan.id_pesanan DESC;
+    ORDER BY pesanan.id_pesanan DESC
 ");
 
 $produk = mysqli_query($conn, "
@@ -75,7 +74,7 @@ $produk = mysqli_query($conn, "
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard Admin</title>
+    <title>Dashboard Admin - Pesanan</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
@@ -122,7 +121,7 @@ $produk = mysqli_query($conn, "
                     <tr>
                         <th>ID</th>
                         <th>Username</th>
-                        <th>Produk</th>
+                        <th>Pesanan</th>
                         <th>Total</th>
                         <th>Alamat</th>
                         <th>Pembayaran</th>
@@ -134,28 +133,27 @@ $produk = mysqli_query($conn, "
                 </thead>
                 <tbody>
 
-                    <?php 
-
-                    while ($p = mysqli_fetch_assoc($pesanan)) { ?>
+                    <?php while ($p = mysqli_fetch_assoc($pesanan)) { ?>
 
                         <tr>
                             <td>#<?php echo $p['id_pesanan']; ?></td>
                             <td><?php echo $p['username']; ?></td>
                             <td>
-                                <?php  /* Buat nampilin nama produk beserta jumlahnya dalam satu cell */
+                                <?php
                                 $id_pesanan = $p['id_pesanan'];
-                                $produk_query = mysqli_query($conn, "
-                                    SELECT produk.nama_produk, detail_pesanan.jumlah
+                                $items = mysqli_query($conn, "
+                                    SELECT 
+                                        produk.nama_produk,
+                                        detail_pesanan.jumlah
                                     FROM detail_pesanan
                                     JOIN produk ON detail_pesanan.id_produk = produk.id_produk
                                     WHERE detail_pesanan.id_pesanan = '$id_pesanan'
                                 ");
 
-                                $produk_list = [];
-                                while ($prodlist = mysqli_fetch_assoc($produk_query)) {
-                                    $produk_list[] = $prodlist['nama_produk'] . " (x" . $prodlist['jumlah'] . ")";
+                                while ($item = mysqli_fetch_assoc($items)) {
+                                    echo $item['nama_produk'] . " (x" . $item['jumlah'] . ")<br>";
+                                    echo "<br>";
                                 }
-                                echo implode(", ", $produk_list);
                                 ?>
                             </td>
                             <td>Rp <?php echo number_format($p['total_harga']); ?></td>
@@ -187,28 +185,33 @@ $produk = mysqli_query($conn, "
 
                                     <select name="status"
                                         class="form-select form-select-sm mb-2" required>
+
                                         <option value="Diproses"
                                             <?php if ($p['status'] == 'Diproses') echo 'selected'; ?>>
                                             Diproses
                                         </option>
+
                                         <option value="Dikirim"
                                             <?php if ($p['status'] == 'Dikirim') echo 'selected'; ?>>
                                             Dikirim
                                         </option>
+
                                         <option value="Selesai"
                                             <?php if ($p['status'] == 'Selesai') echo 'selected'; ?>>
                                             Selesai
                                         </option>
+
                                         <option value="Dibatalkan"
                                             <?php if ($p['status'] == 'Dibatalkan') echo 'selected'; ?>>
                                             Dibatalkan
                                         </option>
+
                                     </select>
 
                                     <button type="submit"
                                         name="update_status"
                                         class="btn custom-btn">
-                                        Push
+                                        Update
                                     </button>
                                 </form>
                             </td>
