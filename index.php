@@ -53,7 +53,7 @@ $produk = mysqli_query($conn, "SELECT * FROM produk WHERE stok > 0");
     </section>
 
     <div class="container mt-5" id="products">
-        <h2 class="text-center mb-4 section-title">Pudding Kita</h2>
+        <h2 class="text-center mb-4 section-title">Pudding Kami</h2>
         <div class="row g-4" id="produk">
             <?php
             while ($p = mysqli_fetch_assoc($produk)) { ?>

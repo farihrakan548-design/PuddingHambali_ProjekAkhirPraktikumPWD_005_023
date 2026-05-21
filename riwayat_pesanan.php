@@ -22,6 +22,22 @@ $pesanan = mysqli_query($conn, "
     ORDER BY pesanan.id_pesanan DESC;
 ");
 
+
+if (isset($_GET['batal'])) {
+    $id_pesanan = $_GET['batal'];
+
+    /* Cek apakah pesanan masih dalam status Diproses dan milik user yang sedang login */
+    mysqli_query($conn, "
+            UPDATE pesanan
+            SET status = 'Dibatalkan'
+            WHERE id_pesanan = '$id_pesanan'
+            AND id_pengguna = '$id_pengguna'
+        ");
+
+    header('location: riwayat_pesanan.php');
+    exit;
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -63,6 +79,10 @@ $pesanan = mysqli_query($conn, "
     <div class="container py-5">
 
         <h2 class="section-title text-center mb-4">Pesanan Anda</h2>
+
+        <div class="d-flex justify-content-left mb-4 mt-4">
+            <a type="button" class="btn custom-btn bg-dark" href="index.php">Kembali ke beranda</a>
+        </div>
 
         <?php if (mysqli_num_rows($pesanan) > 0) { ?>
 
@@ -213,10 +233,6 @@ $pesanan = mysqli_query($conn, "
                 Anda belum memiliki riwayat pesanan.
             </div>
         <?php } ?>
-
-        <div class="d-flex justify-content-center mt-4">
-            <a type="button" class="btn custom-btn bg-dark" href="index.php">Kembali ke beranda</a>
-        </div>
 
     </div>
 

@@ -52,7 +52,7 @@ include 'koneksi.php';
             <div class="card custom-card h-100 shadow">
                 <img src="PuddingHambali_ProjekAkhirPraktikumPWD_005_023/images/puddingcaramel.jpg"class="card-img-top"alt="005">
                 <div class="card-body text-center">
-                    <h5>Farih Rakan Abqori</h5>
+                    <h5 class="section-title mb-3">Farih Rakan Abqori</h5>
                     <p>NIM : 124250005</p>
                     <p>Kelas : SI-A</p>
                 </div>
@@ -62,7 +62,7 @@ include 'koneksi.php';
             <div class="card custom-card h-100 shadow">
                 <img src="PuddingHambali_ProjekAkhirPraktikumPWD_005_023/images/puddingcaramel.jpg" class="card-img-top"alt="023">
                 <div class="card-body text-center">
-                    <h5>Arsi Candra Kusuma</h5>
+                    <h5 class="section-title mb-3">Arsi Candra Kusuma</h5>
                     <p>NIM : 124250023</p>
                     <p>Kelas : SI-A</p>
                 </div>
