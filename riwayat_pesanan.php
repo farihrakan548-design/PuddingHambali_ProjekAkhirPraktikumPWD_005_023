@@ -21,6 +21,7 @@ $pesanan = mysqli_query($conn, "
     WHERE pesanan.id_pengguna = '$id_pengguna'
     ORDER BY pesanan.id_pesanan DESC;
 ");
+
 ?>
 
 <!DOCTYPE html>
@@ -74,6 +75,29 @@ $pesanan = mysqli_query($conn, "
                             <div class="col-md-6">
                                 <table class="table table-borderless">
                                     <tr>
+                                        <th>Produk</th>
+                                        <th>: </th>
+                                        <td>
+                                            <?php
+                                            /* Buat nampilin nama produk yang dipesan sama pengguna */
+                                            $id_pesanan = $p['id_pesanan'];
+                                            $produk_query = mysqli_query($conn, "
+                                                SELECT produk.nama_produk, detail_pesanan.jumlah
+                                                FROM detail_pesanan
+                                                JOIN produk ON detail_pesanan.id_produk = produk.id_produk
+                                                WHERE detail_pesanan.id_pesanan = '$id_pesanan'
+                                            ");
+                                            /*buat nyimpen nama produk beserta jumlahnya dalam array, terus di implode buat nampilin dalam satu cell */
+                                            $produk_list = [];
+                                            while ($prodlist = mysqli_fetch_assoc($produk_query)) {
+                                                $produk_list[] = $prodlist['nama_produk'] . " (x" . $prodlist['jumlah'] . ")";
+                                            }
+
+                                            echo implode(", ", $produk_list);
+                                            ?>
+                                        </td>
+                                    </tr>
+                                    <tr>
                                         <th>Total Harga</th>
                                         <th>: </th>
                                         <td>Rp <?php echo number_format($p['total_harga']); ?></td>
@@ -92,8 +116,17 @@ $pesanan = mysqli_query($conn, "
                                     </tr>
                                     <tr>
                                         <th>Nomor Tujuan</th>
-                                        <th>: </th>
-                                        <td><?php echo $p['nomor_tujuan']; ?></td>
+                                        <th>:</th>
+
+                                        <td>
+                                            <?php
+                                            if ($p['jenis'] == 'COD') {
+                                                echo 'Bayar di Tempat';
+                                            } else {
+                                                echo $p['nomor_tujuan'];
+                                            }
+                                            ?>
+                                        </td>
                                     </tr>
                                     <tr>
                                         <th>Catatan Anda</th>
@@ -104,9 +137,19 @@ $pesanan = mysqli_query($conn, "
                             </div>
                             <div class="col-md-6 text-end">
                                 <div>
-                                    <span class="badge bg-success">
-                                        <?php echo $p['status'] ?? 'Diproses'; ?>
-                                    </span>
+                                    <?php if ($p['status'] == 'Diproses') { ?>
+                                        <span class="badge bg-warning text-dark">
+                                            <?php echo $p['status']; ?>
+                                        </span>
+                                    <?php } elseif ($p['status'] == 'Dibatalkan') { ?>
+                                        <span class="badge bg-danger">
+                                            <?php echo $p['status']; ?>
+                                        </span>
+                                    <?php } else { ?>
+                                        <span class="badge bg-success">
+                                            <?php echo $p['status'] ?? 'Diproses'; ?>
+                                        </span>
+                                    <?php } ?>
                                 </div>
                                 <div>
                                     <?php
@@ -119,11 +162,31 @@ $pesanan = mysqli_query($conn, "
                                 </div>
                             </div>
                         </div>
+
                         <?php if ($p['status'] == 'Diproses') { ?>
-                            <p class="section-title">Catatan: Mohon untuk melakukan pembayaran sesuai dengan metode yang dipilih
-                                pada saat
-                                pesanan diproses</p>
+
+                            <div class="d-flex justify-content-end mt-3">
+                                <a href="proses_ubah_status_pesanan.php?batal=<?php echo $p['id_pesanan']; ?>" class="btn btn-danger" onclick="return confirm('Apakah Anda yakin ingin membatalkan pesanan ini?');">
+                                    Batalkan Pesanan
+                                </a>
+                            </div>
+                            <?php if ($p['jenis'] != 'COD') { ?>
+                                <p class="section-title mt-3">
+                                    Catatan: Mohon untuk melakukan pembayaran sesuai dengan metode yang dipilih
+                                    pada saat
+                                    pesanan diproses agar pesanan dapat segera dikirimkan. Terima kasih!
+                                </p>
+                            <?php } ?>
+
+                        <?php }
+                        if ($p['status'] == 'Dibatalkan') { ?>
+                            <div class="d-flex justify-content-end mt-3">
+                                <a href="proses_ubah_status_pesanan.php?beli_lagi=<?php echo $p['id_pesanan']; ?>" class="btn btn-success" onclick="return confirm('Apakah Anda yakin ingin membeli lagi pesanan ini?');">
+                                    Beli Lagi
+                                </a>
+                            </div>
                         <?php } ?>
+
                     </div>
                 </div>
             <?php } ?>
