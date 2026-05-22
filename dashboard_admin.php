@@ -1,3 +1,4 @@
+
 <?php
 
 include 'koneksi.php';
@@ -66,6 +67,12 @@ $produk = mysqli_query($conn, "
     ORDER BY id_produk DESC
 ");
 
+?>
+
+<?php
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
 ?>
 
 <!DOCTYPE html>
@@ -225,53 +232,63 @@ $produk = mysqli_query($conn, "
         <div class="card shadow-lg border-0 rounded-4 p-4" id="stok-produk">
             <h2 class="section-title text-center mb-4">Stok Produk</h2>
 
-            <div class="table-responsive">
-                <table class="table">
-                    <thead class="table-warning">
+        <div class="table-responsive">
+            <table class="table">
+                <thead class="table-warning">
+                    <tr>
+                        <th>ID</th>
+                        <th>Gambar</th>
+                        <th>Nama Produk</th>
+                        <th>Harga</th>
+                        <th>Stok</th>
+                        <th>Update</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    <?php while ($p = mysqli_fetch_assoc($produk)) { ?>
+
                         <tr>
-                            <th>ID</th>
-                            <th>Gambar</th>
-                            <th>Nama Produk</th>
-                            <th>Harga</th>
-                            <th>Stok</th>
-                            <th>Update</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-
-                        <?php while ($p = mysqli_fetch_assoc($produk)) { ?>
-
-                            <tr>
-                                <td>#<?php echo $p['id_produk']; ?></td>
-                                <td>
-                                    <img src="<?php echo $p['gambar']; ?>" width="80" class="rounded">
-                                </td>
-                                <td><?php echo $p['nama_produk']; ?></td>
-                                <td>Rp <?php echo number_format($p['harga']); ?></td>
-                                <td><?php if ($p['stok'] > 0) { ?>
-                                        <span class="badge bg-success">
-                                            <?php echo $p['stok']; ?>
-                                        </span>
-                                    <?php } else { ?>
-                                        <span class="badge bg-danger">Habis</span>
-                                    <?php } ?>
-                                </td>
-                                <td>
-                                    <form method="POST" class="d-flex gap-2">
-                                        <input type="hidden" name="id_produk" value="<?php echo $p['id_produk']; ?>">
-                                        <input type="number" name="stok" class="form-control"
-                                            value="<?php echo $p['stok']; ?>" min="0" required>
-                                        <button type="submit"  name="update_stok" class="btn custom-btn">Update
-                                        </button>
-                                    </form>
-                                </td>
-                            </tr>
-                        <?php } ?>
-                    </tbody>
-                </table>
-            </div>
+                            <td>#<?php echo $p['id_produk']; ?></td>
+                            <td>
+                                <img src="<?php echo $p['gambar']; ?>" width="80" class="rounded">
+                            </td>
+                            <td><?php echo $p['nama_produk']; ?></td>
+                            <td>Rp <?php echo number_format($p['harga']); ?></td>
+                            <td><?php if ($p['stok'] > 0){ ?>
+                                <span class="badge bg-success">
+                                    <?php echo $p['stok']; ?>
+                                </span>
+                             <?php } else { ?>
+                                <span class="badge bg-danger">Habis</span>
+                            <?php } ?></td>
+                            <td>
+                            <form method="POST" class="d-flex gap-2">
+                                <input type="hidden"
+                                       name="id_produk"
+                                       value="<?php echo $p['id_produk']; ?>">
+                                <input type="number"
+                                       name="stok"
+                                       class="form-control"
+                                       value="<?php echo $p['stok']; ?>"
+                                       min="0"
+                                       required>
+                                <button type="submit"
+                                        name="update_stok"
+                                        class="btn custom-btn">Update
+                                </button>
+                            </form>
+                        </td>
+                    </tr>
+                    <?php } ?>
+                </tbody>
+            </table>
+        </div>
+        <div class="d-flex justify-content-center gap-2 mt-2">
+                        <a href="index.php" type="button" class="btn custom-btn bg-dark">Beranda</a>
         </div>
     </div>
+</div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
 
