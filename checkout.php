@@ -9,7 +9,7 @@ if (!isset($_SESSION['pengguna'])) {
 $id_pengguna = $_SESSION['pengguna']['id_pengguna'];
 
 /* Ambil data keranjang + detail produk */
-$items = mysqli_query($conn, "
+$keranjangPelanggan = mysqli_query($conn, "
     SELECT keranjang.*, produk.nama_produk, produk.harga, produk.gambar
     FROM keranjang
     JOIN produk ON keranjang.id_produk = produk.id_produk
@@ -26,7 +26,7 @@ $total = 0;
 $itemData = [];
 
 /* Hitung total */
-while ($i = mysqli_fetch_assoc($items)) {
+while ($i = mysqli_fetch_assoc($keranjangPelanggan)) {
     $itemData[] = $i;
     $total += $i['harga'] * $i['jumlah'];
 }

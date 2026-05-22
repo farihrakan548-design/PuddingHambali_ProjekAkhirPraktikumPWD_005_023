@@ -1,91 +1,92 @@
-@font-face {
-    font-family: 'font1';
-    src: url('PuddingHambali_ProjekAkhirPraktikumPWD_005_023/font/CHICKEN Pie Height.ttf') format('truetype');
+body {
+  background-image: linear-gradient(to right, #ffecd2, #d1951e);
+  font-family: "Segoe UI", sans-serif;
 }
 
-body {
-    background-color: #e1b471;
-    font-family: 'Segoe UI', sans-serif;
+@font-face {
+  font-family: "font1";
+  src: url("Images/CHICKEN Pie Height.ttf") format("truetype");
 }
+
 .custom-navbar {
-    background-color: #3a2323;
-    padding: 15px 0;
-    font-family: 'font1', cursive;
+  background-color: #3a2323;
+  padding: 15px 0;
+  font-family: "font1", cursive;
 }
 
 .navbar .nav-link {
-    font-size: 18px;
-    color: #f5e6d3 !important;
-    transition: 0.3s;
-    font-family: 'font1', cursive;
+  font-size: 18px;
+  color: #f5e6d3 !important;
+  transition: 0.3s;
+  font-family: "font1", cursive;
 }
 
 .navbar .nav-link:hover {
-    color: #d2a679 !important;
+  color: #d2a679 !important;
 }
 
-html{
-    scroll-behavior: smooth;
+html {
+  scroll-behavior: smooth;
 }
 
 .section-title {
-    color: #3a2323;
-    font-weight: bold;
-    font-family: 'font1', cursive;
+  color: #3a2323;
+  font-weight: bold;
+  font-family: "font1", cursive;
 }
 
 .custom-card {
-    border: none;
-    border-radius: 15px;
-    background-color: #ffefd9;
-    overflow: hidden;
-    transition: 0.3s;
+  border: none;
+  border-radius: 15px;
+  background-color: #ffefd9;
+  overflow: hidden;
+  transition: 0.3s;
 }
 
 .custom-card:hover {
-    box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
 }
 
 .custom-btn {
-    background-color: #6b3e26;
-    color: white;
-    border-radius: 20px;
-    padding: 5px 15px;
+  background-color: #6b3e26;
+  color: white;
+  border-radius: 20px;
+  padding: 5px 15px;
 }
 
 .custom-btn:hover {
-    background-color: #a0522d;
+  background-color: #a0522d;
 }
 
 .custom-footer {
-    background-color: #2e1c1c;
-    color: #f5e6d3;
+  background-color: #2e1c1c;
+  color: #f5e6d3;
 }
 
 .login-box {
-    background-color: #fff8f0;
-    padding: 40px;
-    border-radius: 20px;
-    width: 400px;
-    box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+  background-color: #fff8f0;
+  padding: 40px;
+  border-radius: 20px;
+  width: 400px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
 }
 
 .form-control {
-    border-radius: 10px;
-    padding: 10px;
+  border-radius: 10px;
+  padding: 10px;
 }
 
 .login-box h2 {
-    color: #4b2e2e;
-    font-weight: bold;
+  color: #4b2e2e;
+  font-weight: bold;
 }
 
 .register-link {
-    color: #6b3e26;
-    text-decoration: none;
-    font-weight: bold;
+  color: #6b3e26;
+  text-decoration: none;
+  font-weight: bold;
 }
 
 .register-link:hover {
-    color: #a0522d;
+  color: #a0522d;
 }

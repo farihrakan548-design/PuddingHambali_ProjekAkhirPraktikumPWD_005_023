@@ -192,24 +192,24 @@ if (isset($_GET['batal'])) {
                                     Batalkan Pesanan
                                 </a>
                             </div>
-                            <?php if ($p['nama_metode'] != 'COD') { ?>
+                            <?php if ($p['jenis'] != 'COD') { ?>
                                 <p class="section-title mt-3">Catatan: </p>
-                                <p class="section-title">
+                                <p>
                                     Mohon untuk melakukan pembayaran sesuai dengan metode yang dipilih
                                     pada saat
                                     pesanan diproses agar pesanan dapat segera dikirimkan. Terima kasih :)
                                 </p><?php }
 
-                            if ($p['nama_metode'] == 'COD') {
-                                if ($p['status'] != 'selesai' && $p['status'] != 'Dibatalkan') {
-                                    ?>
-                                    <p class="section-title mt-3">Catatan: </p>
-                                    <p class="section-title">
-                                        Pesanan Anda akan dibayar saat barang sampai di tempat tujuan. Pastikan untuk
-                                        menyiapkan pembayaran sesuai dengan total harga pesanan. Terima kasih :)
-                                    </p> <?php }
-                            }
+                        }
 
+                        if ($p['jenis'] == 'COD') {
+                            if ($p['status'] != 'Selesai' && $p['status'] != 'Dibatalkan') {
+                                ?>
+                                <p class="section-title mt-3">Catatan: </p>
+                                <p>
+                                    Pesanan Anda akan dibayar saat barang sampai di tempat tujuan. Pastikan untuk
+                                    menyiapkan pembayaran sesuai dengan total harga pesanan. Terima kasih :)
+                                </p> <?php }
                         }
 
                         if ($p['status'] == 'Dibatalkan') { ?>
