@@ -229,9 +229,7 @@ $produk = mysqli_query($conn, "
                     </tr>
                 </thead>
                 <tbody>
-
                     <?php while ($p = mysqli_fetch_assoc($produk)) { ?>
-
                         <tr>
                             <td>#<?php echo $p['id_produk']; ?></td>
                             <td>
