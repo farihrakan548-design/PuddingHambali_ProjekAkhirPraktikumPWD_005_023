@@ -7,6 +7,7 @@ if (!isset($_SESSION['pengguna'])) {
     exit;
 }
 
+/* Ambil data keranjang user sesuai ID pengguna */
 $id_pengguna = $_SESSION['pengguna']['id_pengguna'];
 $query = mysqli_query($conn, "
     SELECT keranjang.*, produk.nama_produk, produk.harga, produk.gambar
@@ -15,6 +16,7 @@ $query = mysqli_query($conn, "
     WHERE keranjang.id_pengguna='$id_pengguna'
 ");
 
+/* Simpan data keranjang dalam array */
 $data = [];
 while ($row = mysqli_fetch_assoc($query)) {
     $data[] = $row;
@@ -68,7 +70,9 @@ while ($row = mysqli_fetch_assoc($query)) {
             <div class="card p-4">
                 <div class="card-body">
                     <h2 class="section-title  text-center mb-4">Keranjang Anda</h2>
-                    <?php if (count($data) == 0) { ?>
+
+                    
+                    <?php if (count($data) == 0) { /* Cek apakah keranjang kosong atau tidak */?>
 
                         <div class="alert alert-warning text-center section-title">
                             Keranjang anda masih kosong
