@@ -141,25 +141,51 @@ if (session_status() === PHP_SESSION_NONE) {
         </div>
     </nav>
 
+    <div class="row mt-5"></div>
     <div class="container py-5 mt-5">
         <div class="card shadow-lg border-0 rounded-4 p-4">
             <h2 class="section-title text-center mb-4">Tabel Pesanan</h2>
-            <?php $total_pendapatan = mysqli_query($conn, "
+
+            <table class="table-responsive mb-4">
+                <?php
+
+                /* Buat nampilin total pendapatan, jumlah pesanan, dan total penjualan di dashboard admin */
+
+                $total_pendapatan = mysqli_query($conn, "
                 SELECT SUM(total_harga) AS total
                 FROM pesanan
                 WHERE status = 'Selesai'
             ");
-            $total_pendapatan = mysqli_fetch_assoc($total_pendapatan)['total'];
-            ?>
-            <p class="section-title">Total Pendapatan: Rp <?php echo number_format($total_pendapatan); ?></p>
-            <?php $jumlah_pesanan = mysqli_query($conn, "
+                $total_pendapatan = mysqli_fetch_assoc($total_pendapatan)['total'];
+                ?>
+                <tr>
+                    <th>Total Pendapatan Rp <?php echo number_format($total_pendapatan); ?></th>
+                </tr>
+                <?php $jumlah_pesanan = mysqli_query($conn, "
                 SELECT COUNT(*) AS total
                 FROM pesanan
                 WHERE status = 'Selesai'
             ");
-            $jumlah_pesanan = mysqli_fetch_assoc($jumlah_pesanan)['total'];
-            ?>
-            <p class="section-title">Jumlah Pesanan: <?php echo $jumlah_pesanan; ?></p>
+                $jumlah_pesanan = mysqli_fetch_assoc($jumlah_pesanan)['total'];
+                ?>
+                <tr>
+                    <th>Jumlah Pesanan -> <?php echo $jumlah_pesanan; ?></th>
+                </tr>
+
+                <?php $total_penjualan = mysqli_query($conn, "
+                SELECT SUM(jumlah) AS total
+                FROM detail_pesanan
+                JOIN pesanan ON detail_pesanan.id_pesanan = pesanan.id_pesanan
+                WHERE pesanan.status = 'Selesai'
+            ");
+                $total_penjualan = mysqli_fetch_assoc($total_penjualan)['total'];
+                ?>
+                <tr>
+                    <th>Total Penjualan -> <?php echo $total_penjualan; ?> pack</th>
+                </tr>
+            </table>
+            </table>
+
             <div class="table-responsive">
                 <table class="table">
                     <thead class="table-warning">
@@ -223,17 +249,17 @@ if (session_status() === PHP_SESSION_NONE) {
                                             <?php echo $p['status']; ?>
                                         </span>
                                     <?php } else if ($p['status'] == 'Dikirim') { ?>
-                                        <span class="badge bg-primary">
-                                             <?php echo $p['status']; ?>
-                                        </span>
+                                            <span class="badge bg-primary">
+                                            <?php echo $p['status']; ?>
+                                            </span>
                                     <?php } else if ($p['status'] == 'Selesai') { ?>
-                                        <span class="badge bg-success">
-                                             <?php echo $p['status']; ?>
-                                        </span>
+                                                <span class="badge bg-success">
+                                            <?php echo $p['status']; ?>
+                                                </span>
                                     <?php } else { ?>
-                                        <span class="badge bg-warning">
+                                                <span class="badge bg-warning">
                                             <?php echo $p['status'] ?: 'Diproses'; ?>
-                                        </span>
+                                                </span>
                                     <?php } ?>
                                 </td>
 
@@ -281,7 +307,7 @@ if (session_status() === PHP_SESSION_NONE) {
         </div>
     </div>
 
-    <div class="container py-2">
+    <div class="container py-5">
 
         <div class="card shadow-lg border-0 rounded-4 p-4" id="produk">
             <h2 class="section-title text-center mb-4">Produk</h2>
@@ -344,7 +370,7 @@ if (session_status() === PHP_SESSION_NONE) {
         </div>
     </div>
 
-    <div class="container py-5">
+    <div class="container py-5 mb-5">
 
         <div class="card shadow-lg border-0 rounded-4 p-4">
             <h2 class="section-title text-center mb-4">Tambah Produk Baru</h2>

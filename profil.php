@@ -26,7 +26,7 @@ $pengguna = mysqli_fetch_assoc($profil);
 
 <body>
 
-    <nav class="navbar navbar-expand-lg navbar-dark custom-navbar">
+    <nav class="navbar navbar-expand-lg navbar-dark custom-navbar fixed-top">
         <div class="container">
             <a class="navbar-brand fw-bold" href="#">Pudding Hambali</a>
 
@@ -54,7 +54,8 @@ $pengguna = mysqli_fetch_assoc($profil);
         </div>
     </nav>
 
-    <div class="container py-5">
+    <div class="row mt-5"></div>
+    <div class="container py-5 mt-5">
         <div class="row justify-content-center">
             <div class="col-md-5">
                 <div class="card border-0 shadow-lg rounded-4">

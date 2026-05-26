@@ -60,6 +60,6 @@ elseif ($aksi == 'kurang') {
     }
 }
 
-header("Location: keranjang.php");
+header("Location: keranjang.php#keranjang_anda");
 exit;
 ?>

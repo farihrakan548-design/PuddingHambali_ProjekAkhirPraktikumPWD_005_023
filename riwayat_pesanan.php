@@ -53,7 +53,7 @@ if (isset($_GET['batal'])) {
 
 <body>
 
-    <nav class="navbar navbar-expand-lg navbar-dark custom-navbar">
+    <nav class="navbar navbar-expand-lg navbar-dark custom-navbar mb-4 fixed-top">
         <div class="container">
             <a class="navbar-brand fw-bold" href="index.php">Pudding Hambali</a>
 
@@ -76,7 +76,8 @@ if (isset($_GET['batal'])) {
         </div>
     </nav>
 
-    <div class="container py-5">
+    <div class="row mt-4"></div>
+    <div class="container py-5 mt-5">
 
         <h2 class="section-title text-center mb-4">Pesanan Anda</h2>
 

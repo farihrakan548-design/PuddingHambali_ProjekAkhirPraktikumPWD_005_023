@@ -16,7 +16,7 @@ include 'koneksi.php';
 </head>
 
 <body>
-    <nav class="navbar navbar-expand-lg navbar-dark custom-navbar">
+    <nav class="navbar navbar-expand-lg navbar-dark custom-navbar fixed-top">
         <div class="container">
             <a class="navbar-brand fw-bold" href="#">Pudding Hambali</a>
 
@@ -44,32 +44,33 @@ include 'koneksi.php';
         </div>
     </nav>
 
- <div class="container mt-5" id="products">
+    <div class="row mt-5"></div>
+    <div class="container py-5 mt-5 mb-5">
 
-    <div class="row justify-content-center g-4">
+        <div class="row justify-content-center g-4">
 
-        <div class="col-md-3">
-            <div class="card custom-card h-100 shadow">
-                <img src="Images/Rakan.JPEG"class="card-img-top"alt="005">
-                <div class="card-body text-center">
-                    <h5 class="section-title mb-3">Farih Rakan Abqori</h5>
-                    <p>NIM : 124250005</p>
-                    <p>Kelas : SI-A</p>
+            <div class="col-md-3">
+                <div class="card custom-card h-100 shadow">
+                    <img src="Images/Rakan.JPEG" class="card-img-top" alt="005">
+                    <div class="card-body text-center">
+                        <h5 class="section-title mb-3">Farih Rakan Abqori</h5>
+                        <p>NIM : 124250005</p>
+                        <p>Kelas : SI-A</p>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="col-md-3">
-            <div class="card custom-card h-100 shadow">
-                <img src="Images/Candra.JPEG" class="card-img-top"alt="023">
-                <div class="card-body text-center">
-                    <h5 class="section-title mb-3">Arsi Candra Kusuma</h5>
-                    <p>NIM : 124250023</p>
-                    <p>Kelas : SI-A</p>
+            <div class="col-md-3">
+                <div class="card custom-card h-100 shadow">
+                    <img src="Images/Candra.JPEG" class="card-img-top" alt="023">
+                    <div class="card-body text-center">
+                        <h5 class="section-title mb-3">Arsi Candra Kusuma</h5>
+                        <p>NIM : 124250023</p>
+                        <p>Kelas : SI-A</p>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
     <footer class="custom-footer text-center mt-5 p-4">
         <div class="container">
             <h5 class="fw-bold mb-2">Pudding Hambali</h5>

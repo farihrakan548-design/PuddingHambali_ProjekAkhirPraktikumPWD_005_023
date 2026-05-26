@@ -110,7 +110,7 @@ if (isset($_POST['checkout'])) {
 
 <body>
 
-    <nav class="navbar navbar-expand-lg navbar-dark custom-navbar">
+    <nav class="navbar navbar-expand-lg navbar-dark custom-navbar fixed-top">
         <div class="container">
             <a class="navbar-brand fw-bold" href="#">Pudding Hambali</a>
 
@@ -138,7 +138,8 @@ if (isset($_POST['checkout'])) {
         </div>
     </nav>
 
-    <div class="container py-5">
+    <div class="row mt-5"></div>
+    <div class="container py-5 mt-5 mb-5">
         <div class="row justify-content-center">
             <div class="col-md-5">
                 <div class="card border-0 shadow-lg rounded-4">
@@ -168,7 +169,7 @@ if (isset($_POST['checkout'])) {
                                     placeholder="Masukkan catatan jika perlu"></textarea>
                             </div>
                             <div class="d-flex justify-content-center gap-2">
-                                <button type="submit" name="checkout" class="btn custom-btn">Checkout</button>
+                                <button type="submit" name="checkout" class="btn custom-btn" onclick="return confirm('Yakin ingin checkout?')">Checkout</button>
                                 <button type="button" class="btn custom-btn bg-dark"
                                     onclick="window.history.back()">Kembali</button>
                             </div>

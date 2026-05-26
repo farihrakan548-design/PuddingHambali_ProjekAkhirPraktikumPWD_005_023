@@ -37,7 +37,7 @@ while ($row = mysqli_fetch_assoc($query)) {
 
 <body>
 
-    <nav class="navbar navbar-expand-lg navbar-dark custom-navbar">
+    <nav class="navbar navbar-expand-lg navbar-dark custom-navbar fixed-top">
         <div class="container">
             <a class="navbar-brand fw-bold" href="#">Pudding Hambali</a>
 
@@ -65,7 +65,8 @@ while ($row = mysqli_fetch_assoc($query)) {
         </div>
     </nav>
 
-    <div class="container py-5">
+    <div class="row mt-5"></div>
+    <div class="container py-5 mt-5 mb-5">
         <div class="row g-4">
             <div class="card p-4">
                 <div class="card-body">
@@ -95,7 +96,7 @@ while ($row = mysqli_fetch_assoc($query)) {
                             <?php } ?>
                         </div>
 
-                        <table class="table">
+                        <table class="table" id="keranjang_anda">
                             <thead>
                                 <tr class="table table-warning">
                                     <th scope="col">Produk</th>

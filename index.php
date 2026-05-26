@@ -17,7 +17,7 @@ $produk = mysqli_query($conn, "SELECT * FROM produk WHERE stok > 0");
 
 <body>
 
-    <nav class="navbar navbar-expand-lg navbar-dark custom-navbar">
+    <nav class="navbar navbar-expand-lg navbar-dark custom-navbar fixed-top">
         <div class="container">
             <a class="navbar-brand fw-bold" href="#">Pudding Hambali</a>
 
@@ -45,12 +45,14 @@ $produk = mysqli_query($conn, "SELECT * FROM produk WHERE stok > 0");
         </div>
     </nav>
 
-    <section class="header-section">
-        <div class="container text-center">
-            <h1 class="display-4 section-title mt-4">Pudding Hambali Termoney-Money</h1>
-            <p class="section-title">Pudding lezat aseli ngawi punyanya Pak Hambali</p>
-        </div>
-    </section>
+    <div class="container py-5 mt-5 mb-5">
+        <section class="header-section mt-5">
+            <div class="container text-center">
+                <h1 class="display-4 section-title mt-4">Pudding Hambali Termoney-Money</h1>
+                <p class="section-title">Pudding lezat aseli ngawi punyanya Pak Hambali</p>
+            </div>
+        </section>
+    </div>
 
     <div class="container mt-5" id="products">
         <h2 class="text-center mb-4 section-title">Pudding Kami</h2>
