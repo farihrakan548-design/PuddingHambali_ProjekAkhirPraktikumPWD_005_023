@@ -1,4 +1,3 @@
-
 <?php
 
 include 'koneksi.php';
@@ -33,18 +32,48 @@ if (isset($_POST['update_status'])) {
     exit;
 }
 
-if (isset($_POST['update_stok'])) {
+if (isset($_POST['update_produk'])) {
 
     $id_produk = $_POST['id_produk'];
+    $gambar = $_POST['gambar'];
+    $nama_produk = $_POST['nama_produk'];
+    $harga = $_POST['harga'];
     $stok = $_POST['stok'];
 
     mysqli_query($conn, "
         UPDATE produk
-        SET stok = '$stok'
+        SET gambar = '$gambar', nama_produk = '$nama_produk', harga = '$harga', stok = '$stok'
         WHERE id_produk = '$id_produk'
     ");
 
-    header("Location: dashboard_admin.php#stok-produk");
+    header("Location: dashboard_admin.php#produk");
+    exit;
+}
+
+if (isset($_POST['hapus_produk'])) {
+    $id_produk = $_POST['id_produk'];
+
+    mysqli_query($conn, "
+        DELETE FROM produk
+        WHERE id_produk = '$id_produk'
+    ");
+
+    header("Location: dashboard_admin.php#produk");
+    exit;
+}
+
+if (isset($_POST['tambah_produk'])) {
+    $gambar = $_POST['gambar'];
+    $nama_produk = $_POST['nama_produk'];
+    $harga = $_POST['harga'];
+    $stok = $_POST['stok'];
+
+    mysqli_query($conn, "
+        INSERT INTO produk (gambar, nama_produk, harga, stok)
+        VALUES ('$gambar', '$nama_produk', '$harga', '$stok')
+    ");
+
+    header("Location: dashboard_admin.php#produk");
     exit;
 }
 
@@ -67,9 +96,7 @@ $produk = mysqli_query($conn, "
     ORDER BY id_produk DESC
 ");
 
-?>
 
-<?php
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
@@ -88,7 +115,7 @@ if (session_status() === PHP_SESSION_NONE) {
 
 <body>
 
-    <nav class="navbar navbar-expand-lg navbar-dark custom-navbar">
+    <nav class="navbar navbar-expand-lg navbar-dark custom-navbar fixed-top">
         <div class="container">
             <a class="navbar-brand fw-bold" href="#">Pudding Hambali</a>
 
@@ -105,9 +132,6 @@ if (session_status() === PHP_SESSION_NONE) {
                         <li class="nav-item"><a class="nav-link" href="keranjang.php">Keranjang</a></li>
                         <li class="nav-item"><a class="nav-link" href="profil.php">Profil</a></li>
                         <li class="nav-item"><a class="nav-link" href="logout.php">Logout</a></li>
-                        <?php if (isset($_SESSION['pengguna']) && $_SESSION['pengguna']['role'] == 'admin') { ?>
-                            <li class="nav-item"><a class="nav-link" href="dashboard_admin.php">Admin</a></li>
-                        <?php } ?>
                     <?php } else { ?>
                         <li class="nav-item"><a class="nav-link" href="login.php">Login</a></li>
                         <li class="nav-item"><a class="nav-link" href="register.php">Register</a></li>
@@ -117,10 +141,25 @@ if (session_status() === PHP_SESSION_NONE) {
         </div>
     </nav>
 
-    <div class="container py-5">
+    <div class="container py-5 mt-5">
         <div class="card shadow-lg border-0 rounded-4 p-4">
             <h2 class="section-title text-center mb-4">Tabel Pesanan</h2>
-
+            <?php $total_pendapatan = mysqli_query($conn, "
+                SELECT SUM(total_harga) AS total
+                FROM pesanan
+                WHERE status = 'Selesai'
+            ");
+            $total_pendapatan = mysqli_fetch_assoc($total_pendapatan)['total'];
+            ?>
+            <p class="section-title">Total Pendapatan: Rp <?php echo number_format($total_pendapatan); ?></p>
+            <?php $jumlah_pesanan = mysqli_query($conn, "
+                SELECT COUNT(*) AS total
+                FROM pesanan
+                WHERE status = 'Selesai'
+            ");
+            $jumlah_pesanan = mysqli_fetch_assoc($jumlah_pesanan)['total'];
+            ?>
+            <p class="section-title">Jumlah Pesanan: <?php echo $jumlah_pesanan; ?></p>
             <div class="table-responsive">
                 <table class="table">
                     <thead class="table-warning">
@@ -179,9 +218,23 @@ if (session_status() === PHP_SESSION_NONE) {
                                 </td>
 
                                 <td class="text-center">
-                                    <span class="badge bg-success">
-                                        <?php echo $p['status'] ?: 'Diproses'; ?>
-                                    </span>
+                                    <?php if ($p['status'] == 'Dibatalkan') { ?>
+                                        <span class="badge bg-danger">
+                                            <?php echo $p['status']; ?>
+                                        </span>
+                                    <?php } else if ($p['status'] == 'Dikirim') { ?>
+                                        <span class="badge bg-primary">
+                                             <?php echo $p['status']; ?>
+                                        </span>
+                                    <?php } else if ($p['status'] == 'Selesai') { ?>
+                                        <span class="badge bg-success">
+                                             <?php echo $p['status']; ?>
+                                        </span>
+                                    <?php } else { ?>
+                                        <span class="badge bg-warning">
+                                            <?php echo $p['status'] ?: 'Diproses'; ?>
+                                        </span>
+                                    <?php } ?>
                                 </td>
 
                                 <td>
@@ -211,8 +264,8 @@ if (session_status() === PHP_SESSION_NONE) {
                                             </option>
 
                                         </select>
-
-                                        <button type="submit" name="update_status" class="btn custom-btn">
+                                        <button type="submit" name="update_status" class="btn custom-btn"
+                                            onclick="return confirm('Update status pesanan?')">
                                             Update
                                         </button>
                                     </form>
@@ -227,68 +280,106 @@ if (session_status() === PHP_SESSION_NONE) {
             </div>
         </div>
     </div>
-    <div class="container py-5">
 
-        <div class="card shadow-lg border-0 rounded-4 p-4" id="stok-produk">
-            <h2 class="section-title text-center mb-4">Stok Produk</h2>
+    <div class="container py-2">
 
-        <div class="table-responsive">
-            <table class="table">
-                <thead class="table-warning">
-                    <tr>
-                        <th>ID</th>
-                        <th>Gambar</th>
-                        <th>Nama Produk</th>
-                        <th>Harga</th>
-                        <th>Stok</th>
-                        <th>Update</th>
-                    </tr>
-                </thead>
-                <tbody>
+        <div class="card shadow-lg border-0 rounded-4 p-4" id="produk">
+            <h2 class="section-title text-center mb-4">Produk</h2>
 
-                    <?php while ($p = mysqli_fetch_assoc($produk)) { ?>
-
+            <div class="table-responsive">
+                <table class="table">
+                    <thead class="table-warning">
                         <tr>
-                            <td>#<?php echo $p['id_produk']; ?></td>
-                            <td>
-                                <img src="<?php echo $p['gambar']; ?>" width="80" class="rounded">
-                            </td>
-                            <td><?php echo $p['nama_produk']; ?></td>
-                            <td>Rp <?php echo number_format($p['harga']); ?></td>
-                            <td><?php if ($p['stok'] > 0){ ?>
-                                <span class="badge bg-success">
-                                    <?php echo $p['stok']; ?>
-                                </span>
-                             <?php } else { ?>
-                                <span class="badge bg-danger">Habis</span>
-                            <?php } ?></td>
-                            <td>
-                            <form method="POST" class="d-flex gap-2">
-                                <input type="hidden"
-                                       name="id_produk"
-                                       value="<?php echo $p['id_produk']; ?>">
-                                <input type="number"
-                                       name="stok"
-                                       class="form-control"
-                                       value="<?php echo $p['stok']; ?>"
-                                       min="0"
-                                       required>
-                                <button type="submit"
-                                        name="update_stok"
-                                        class="btn custom-btn">Update
-                                </button>
-                            </form>
-                        </td>
-                    </tr>
-                    <?php } ?>
-                </tbody>
-            </table>
-        </div>
-        <div class="d-flex justify-content-center gap-2 mt-2">
-                        <a href="index.php" type="button" class="btn custom-btn bg-dark">Beranda</a>
+                            <th>ID</th>
+                            <th>Gambar</th>
+                            <th>Url Gambar</th>
+                            <th>Nama Produk</th>
+                            <th>Harga</th>
+                            <th>Stok</th>
+                            <th>Aksi</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        <?php while ($p = mysqli_fetch_assoc($produk)) { ?>
+
+                            <tr>
+                                <form method="POST" class="d-flex gap-2">
+                                    <td>
+                                        #<?php echo $p['id_produk']; ?></td>
+                                    <td>
+                                        <img src="<?php echo $p['gambar']; ?>" width="80" class="rounded">
+                                    </td>
+                                    <td>
+                                        <input type="text" name="gambar" class="form-control"
+                                            value="<?php echo $p['gambar']; ?>" required>
+                                    </td>
+                                    <td>
+                                        <input type="text" name="nama_produk" class="form-control"
+                                            value="<?php echo $p['nama_produk']; ?>" required>
+                                    </td>
+                                    <td>
+                                        <input type="number" name="harga" class="form-control"
+                                            value="<?php echo $p['harga']; ?>" min="0" required>
+                                    </td>
+                                    <td>
+                                        <input type="number" name="stok" class="form-control"
+                                            value="<?php echo $p['stok']; ?>" min="0" required>
+                                    </td>
+                                    <td class="d-flex flex-column gap-2">
+                                        <input type="hidden" name="id_produk" value="<?php echo $p['id_produk']; ?>">
+                                        <button type="submit" name="update_produk" class="btn custom-btn"
+                                            onclick="return confirm('update data produk?')">Update
+                                        </button>
+                                        <button type="submit" name="hapus_produk" class="btn btn-warning"
+                                            onclick="return confirm('Yakin ingin menghapus produk ini?')">Hapus
+                                        </button>
+                                    </td>
+                                </form>
+                            </tr>
+                        <?php } ?>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
-</div>
+
+    <div class="container py-5">
+
+        <div class="card shadow-lg border-0 rounded-4 p-4">
+            <h2 class="section-title text-center mb-4">Tambah Produk Baru</h2>
+
+            <form method="POST" class="row g-3">
+
+                <div class="col-md-6">
+                    <label class="form-label">Url Gambar</label>
+                    <input type="text" name="gambar" class="form-control" placeholder="Masukkan url gambar produk"
+                        required>
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label">Nama Produk</label>
+                    <input type="text" name="nama_produk" class="form-control" placeholder="Masukkan nama produk"
+                        required>
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label">Harga</label>
+                    <input type="number" name="harga" class="form-control" placeholder="Masukkan harga produk" min="0"
+                        required>
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label">Stok</label>
+                    <input type="number" name="stok" class="form-control" placeholder="Masukkan stok produk" min="0"
+                        required>
+                </div>
+                <div class="col-12 justify-content-center d-flex">
+                    <button type="submit" name="tambah_produk" class="btn custom-btn"
+                        onclick="return confirm('Yakin ingin menambahkan produk ini?')">Tambah Produk</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
 
