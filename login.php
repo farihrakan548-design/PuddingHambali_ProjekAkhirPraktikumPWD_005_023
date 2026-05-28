@@ -64,7 +64,7 @@ if (isset($_POST['login'])) {
                     <?php if (isset($_SESSION['pengguna'])) { ?>
                         <li class="nav-item"><a class="nav-link" href="keranjang.php">Keranjang</a></li>
                         <li class="nav-item"><a class="nav-link" href="profil.php">Profil</a></li>
-                        <li class="nav-item"><a class="nav-link" href="logout.php">Logout</a></li>
+                        <li class="nav-item"><a class="nav-link" href="logout.php" onclick="return confirm('Apakah Anda yakin ingin logout?')">Logout</a></li>
                     <?php } else { ?>
                         <li class="nav-item"><a class="nav-link" href="register.php">Register</a></li>
                     <?php } ?>

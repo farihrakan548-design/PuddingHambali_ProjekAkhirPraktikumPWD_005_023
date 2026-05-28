@@ -131,7 +131,7 @@ if (session_status() === PHP_SESSION_NONE) {
                         <li class="nav-item"><a class="nav-link" href="riwayat_pesanan.php">Riwayat Pesanan</a></li>
                         <li class="nav-item"><a class="nav-link" href="keranjang.php">Keranjang</a></li>
                         <li class="nav-item"><a class="nav-link" href="profil.php">Profil</a></li>
-                        <li class="nav-item"><a class="nav-link" href="logout.php">Logout</a></li>
+                        <li class="nav-item"><a class="nav-link" href="logout.php" onclick="return confirm('Apakah Anda yakin ingin logout?')">Logout</a></li>
                     <?php } else { ?>
                         <li class="nav-item"><a class="nav-link" href="login.php">Login</a></li>
                         <li class="nav-item"><a class="nav-link" href="register.php">Register</a></li>

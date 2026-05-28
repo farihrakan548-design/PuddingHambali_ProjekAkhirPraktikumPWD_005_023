@@ -125,7 +125,7 @@ if (isset($_POST['checkout'])) {
                     <?php if (isset($_SESSION['pengguna'])) { ?>
                         <li class="nav-item"><a class="nav-link" href="keranjang.php">Keranjang</a></li>
                         <li class="nav-item"><a class="nav-link" href="profil.php">Profil</a></li>
-                        <li class="nav-item"><a class="nav-link" href="logout.php">Logout</a></li>
+                        <li class="nav-item"><a class="nav-link" href="logout.php" onclick="return confirm('Apakah Anda yakin ingin logout?')">Logout</a></li>
                         <?php if (isset($_SESSION['pengguna']) && $_SESSION['pengguna']['role'] == 'admin') { ?>
                             <li class="nav-item"><a class="nav-link" href="dashboard_admin.php">Admin</a></li>
                         <?php } ?>

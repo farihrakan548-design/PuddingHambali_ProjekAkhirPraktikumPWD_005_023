@@ -32,7 +32,7 @@ $produk = mysqli_query($conn, "SELECT * FROM produk WHERE stok > 0");
                         <li class="nav-item"><a class="nav-link" href="riwayat_pesanan.php">Riwayat Pesanan</a></li>
                         <li class="nav-item"><a class="nav-link" href="keranjang.php">Keranjang</a></li>
                         <li class="nav-item"><a class="nav-link" href="profil.php">Profil</a></li>
-                        <li class="nav-item"><a class="nav-link" href="logout.php">Logout</a></li>
+                        <li class="nav-item"><a class="nav-link" href="logout.php" onclick="return confirm('Apakah Anda yakin ingin logout?')">Logout</a></li>
                         <?php if (isset($_SESSION['pengguna']) && $_SESSION['pengguna']['role'] == 'admin') { ?>
                             <li class="nav-item"><a class="nav-link" href="dashboard_admin.php">Admin</a></li>
                         <?php } ?>
@@ -54,7 +54,7 @@ $produk = mysqli_query($conn, "SELECT * FROM produk WHERE stok > 0");
         </section>
     </div>
 
-    <div class="card menu-card rounded-5 p-5 mt-5" id="products">
+    <div class="card menu-card rounded-top-5 p-5 mt-5" id="products">
         <h2 class="text-center mb-5 section-title">Pudding Kami</h2>
         <div class="row g-4 justify-content-center" id="produk">
             <?php
@@ -79,7 +79,7 @@ $produk = mysqli_query($conn, "SELECT * FROM produk WHERE stok > 0");
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 
-<footer class="custom-footer text-center p-4 mt-5">
+<footer class="custom-footer text-center p-4">
     <div class="container">
         <h5 class="fw-bold mb-2">Pudding Hambali</h5>
         <p class="mb-2">

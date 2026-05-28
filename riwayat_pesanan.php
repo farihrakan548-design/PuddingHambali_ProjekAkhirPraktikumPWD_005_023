@@ -67,7 +67,7 @@ if (isset($_GET['batal'])) {
                     <li class="nav-item"><a class="nav-link" href="about_us.php">About Us</a></li>
                     <li class="nav-item"><a class="nav-link" href="keranjang.php">Keranjang</a></li>
                     <li class="nav-item"><a class="nav-link" href="profil.php">Profil</a></li>
-                    <li class="nav-item"><a class="nav-link" href="logout.php">Logout</a></li>
+                    <li class="nav-item"><a class="nav-link" href="logout.php" onclick="return confirm('Apakah Anda yakin ingin logout?')">Logout</a></li>
                     <?php if (isset($_SESSION['pengguna']) && $_SESSION['pengguna']['role'] == 'admin') { ?>
                         <li class="nav-item"><a class="nav-link" href="dashboard_admin.php">Admin</a></li>
                     <?php } ?>
