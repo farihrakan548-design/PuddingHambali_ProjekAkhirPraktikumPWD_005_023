@@ -31,7 +31,8 @@ include 'koneksi.php';
                         <li class="nav-item"><a class="nav-link" href="riwayat_pesanan.php">Riwayat Pesanan</a></li>
                         <li class="nav-item"><a class="nav-link" href="keranjang.php">Keranjang</a></li>
                         <li class="nav-item"><a class="nav-link" href="profil.php">Profil</a></li>
-                        <li class="nav-item"><a class="nav-link" href="logout.php" onclick="return confirm('Apakah Anda yakin ingin logout?')">Logout</a></li>
+                        <li class="nav-item"><a class="nav-link" href="logout.php"
+                                onclick="return confirm('Apakah Anda yakin ingin logout?')">Logout</a></li>
                         <?php if (isset($_SESSION['pengguna']) && $_SESSION['pengguna']['role'] == 'admin') { ?>
                             <li class="nav-item"><a class="nav-link" href="dashboard_admin.php">Admin</a></li>
                         <?php } ?>
@@ -49,6 +50,17 @@ include 'koneksi.php';
 
         <div class="row justify-content-center g-4">
 
+
+            <div class="col-md-12">
+                <div class="card custom-card h-100 shadow">
+                    <div class="card-body text-center d-flex flex-column justify-content-center">
+                        <h5 class="section-title mb-3">Pudding Hambali</h5>
+                        <p>Pudding Hambali adalah sebuah brand dari toko pudding kami. toko ini menjual berbagai macam
+                            pudding dengan rasa yang lezat dan kualitas terbaik. Berbagai macam varian rasa dapat
+                            dipilih oleh pelanggan kami.</p>
+                    </div>
+                </div>
+            </div>
             <div class="col-md-3">
                 <div class="card custom-card h-100 shadow">
                     <img src="Images/Rakan.JPEG" class="card-img-top" alt="005">
@@ -69,6 +81,7 @@ include 'koneksi.php';
                     </div>
                 </div>
             </div>
+
         </div>
     </div>
     <footer class="custom-footer text-center mt-5 p-4">
