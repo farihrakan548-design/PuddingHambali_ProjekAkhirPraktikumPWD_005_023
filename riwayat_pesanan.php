@@ -23,13 +23,29 @@ $pesanan = mysqli_query($conn, "
 ");
 
 
-if (isset($_GET['batal'])) {
-    $id_pesanan = $_GET['batal'];
+
+if (isset($_POST['batal'])) {
+    $id_pesanan = $_POST['id_pesanan'];
 
     /* Cek apakah pesanan masih dalam status Diproses dan milik user yang sedang login */
     mysqli_query($conn, "
             UPDATE pesanan
             SET status = 'Dibatalkan'
+            WHERE id_pesanan = '$id_pesanan'
+            AND id_pengguna = '$id_pengguna'
+        ");
+
+    header('location: riwayat_pesanan.php');
+    exit;
+}
+
+if (isset($_POST['beli_lagi'])) {
+    $id_pesanan = $_POST['id_pesanan'];
+
+    /* Cek apakah pesanan masih dalam status Diproses dan milik user yang sedang login */
+    mysqli_query($conn, "
+            UPDATE pesanan
+            SET status = 'Diproses'
             WHERE id_pesanan = '$id_pesanan'
             AND id_pengguna = '$id_pengguna'
         ");
@@ -67,7 +83,8 @@ if (isset($_GET['batal'])) {
                     <li class="nav-item"><a class="nav-link" href="about_us.php">About Us</a></li>
                     <li class="nav-item"><a class="nav-link" href="keranjang.php">Keranjang</a></li>
                     <li class="nav-item"><a class="nav-link" href="profil.php">Profil</a></li>
-                    <li class="nav-item"><a class="nav-link" href="logout.php" onclick="return confirm('Apakah Anda yakin ingin logout?')">Logout</a></li>
+                    <li class="nav-item"><a class="nav-link" href="logout.php"
+                            onclick="return confirm('Apakah Anda yakin ingin logout?')">Logout</a></li>
                     <?php if (isset($_SESSION['pengguna']) && $_SESSION['pengguna']['role'] == 'admin') { ?>
                         <li class="nav-item"><a class="nav-link" href="dashboard_admin.php">Admin</a></li>
                     <?php } ?>
@@ -86,7 +103,6 @@ if (isset($_GET['batal'])) {
         </div>
 
         <?php if (mysqli_num_rows($pesanan) > 0) { ?>
-
 
             <?php while ($p = mysqli_fetch_assoc($pesanan)) { ?>
                 <div class="card shadow-lg border-0 rounded-4 p-2 mb-4">
@@ -113,7 +129,6 @@ if (isset($_GET['batal'])) {
                                             while ($prodlist = mysqli_fetch_assoc($produk_query)) {
                                                 $produk_list[] = $prodlist['nama_produk'] . " (x" . $prodlist['jumlah'] . ")";
                                             }
-
                                             echo implode(", ", $produk_list);
                                             ?>
                                         </td>
@@ -187,11 +202,13 @@ if (isset($_GET['batal'])) {
                         <?php if ($p['status'] == 'Diproses') { ?>
 
                             <div class="d-flex justify-content-end mt-3">
-                                <a href="proses_ubah_status_pesanan.php?batal=<?php echo $p['id_pesanan']; ?>"
-                                    class="btn btn-danger"
-                                    onclick="return confirm('Apakah Anda yakin ingin membatalkan pesanan ini?');">
-                                    Batalkan Pesanan
-                                </a>
+                                <form method="POST">
+                                    <input type="hidden" name="id_pesanan" value="<?php echo $p['id_pesanan']; ?>">
+                                    <button type="submit" name="batal" class="btn btn-danger"
+                                        onclick="return confirm('Apakah Anda yakin ingin membatalkan pesanan ini?');">
+                                        Batalkan Pesanan
+                                    </button>
+                                </form>
                             </div>
                             <?php if ($p['jenis'] != 'COD') { ?>
                                 <p class="section-title mt-3">Catatan: </p>
@@ -215,11 +232,13 @@ if (isset($_GET['batal'])) {
 
                         if ($p['status'] == 'Dibatalkan') { ?>
                             <div class="d-flex justify-content-end mt-3">
-                                <a href="proses_ubah_status_pesanan.php?beli_lagi=<?php echo $p['id_pesanan']; ?>"
-                                    class="btn btn-success"
-                                    onclick="return confirm('Apakah Anda yakin ingin membeli lagi pesanan ini?');">
-                                    Beli Lagi
-                                </a>
+                                <form method="POST">
+                                    <input type="hidden" name="id_pesanan" value="<?php echo $p['id_pesanan']; ?>">
+                                    <button type="submit" name="beli_lagi" class="btn btn-success"
+                                        onclick="return confirm('Apakah Anda yakin ingin membeli lagi pesanan ini?');">
+                                        Beli Lagi
+                                    </button>
+                                </form>
                             </div>
                         <?php } ?>
 

@@ -1,5 +1,5 @@
 <?php
-
+session_start();
 include 'koneksi.php';
 
 if (!isset($_SESSION['pengguna'])) {
@@ -7,6 +7,7 @@ if (!isset($_SESSION['pengguna'])) {
     exit;
 }
 
+/* Cek apakah pengguna yang login adalah admin */
 if ($_SESSION['pengguna']['role'] != 'admin') {
     echo "
     <script>
@@ -32,17 +33,19 @@ if (isset($_POST['update_status'])) {
     exit;
 }
 
+/* kalo admin milih update produk */
 if (isset($_POST['update_produk'])) {
 
     $id_produk = $_POST['id_produk'];
     $gambar = $_POST['gambar'];
     $nama_produk = $_POST['nama_produk'];
+    $deskripsi = $_POST['deskripsi'];
     $harga = $_POST['harga'];
     $stok = $_POST['stok'];
 
     mysqli_query($conn, "
         UPDATE produk
-        SET gambar = '$gambar', nama_produk = '$nama_produk', harga = '$harga', stok = '$stok'
+        SET gambar = '$gambar', nama_produk = '$nama_produk', deskripsi = '$deskripsi', harga = '$harga', stok = '$stok'
         WHERE id_produk = '$id_produk'
     ");
 
@@ -50,6 +53,7 @@ if (isset($_POST['update_produk'])) {
     exit;
 }
 
+/* kalo admin milih hapus produk */
 if (isset($_POST['hapus_produk'])) {
     $id_produk = $_POST['id_produk'];
 
@@ -62,15 +66,17 @@ if (isset($_POST['hapus_produk'])) {
     exit;
 }
 
+/* kalo admin nambahin produk baru */
 if (isset($_POST['tambah_produk'])) {
     $gambar = $_POST['gambar'];
     $nama_produk = $_POST['nama_produk'];
+    $deskripsi = $_POST['deskripsi'];
     $harga = $_POST['harga'];
     $stok = $_POST['stok'];
 
     mysqli_query($conn, "
-        INSERT INTO produk (gambar, nama_produk, harga, stok)
-        VALUES ('$gambar', '$nama_produk', '$harga', '$stok')
+        INSERT INTO produk (gambar, nama_produk, deskripsi, harga, stok)
+        VALUES ('$gambar', '$nama_produk', '$deskripsi', '$harga', '$stok')
     ");
 
     header("Location: dashboard_admin.php#produk");
@@ -91,15 +97,12 @@ $pesanan = mysqli_query($conn, "
     ORDER BY pesanan.id_pesanan DESC
 ");
 
+/* Query buat ngambil data produk di database */
 $produk = mysqli_query($conn, "
     SELECT * FROM produk
     ORDER BY id_produk DESC
 ");
 
-
-if (session_status() === PHP_SESSION_NONE) {
-    session_start();
-}
 ?>
 
 <!DOCTYPE html>
@@ -131,7 +134,8 @@ if (session_status() === PHP_SESSION_NONE) {
                         <li class="nav-item"><a class="nav-link" href="riwayat_pesanan.php">Riwayat Pesanan</a></li>
                         <li class="nav-item"><a class="nav-link" href="keranjang.php">Keranjang</a></li>
                         <li class="nav-item"><a class="nav-link" href="profil.php">Profil</a></li>
-                        <li class="nav-item"><a class="nav-link" href="logout.php" onclick="return confirm('Apakah Anda yakin ingin logout?')">Logout</a></li>
+                        <li class="nav-item"><a class="nav-link" href="logout.php"
+                                onclick="return confirm('Apakah Anda yakin ingin logout?')">Logout</a></li>
                     <?php } else { ?>
                         <li class="nav-item"><a class="nav-link" href="login.php">Login</a></li>
                         <li class="nav-item"><a class="nav-link" href="register.php">Register</a></li>
@@ -150,35 +154,42 @@ if (session_status() === PHP_SESSION_NONE) {
                 <?php
 
                 /* Buat nampilin total pendapatan, jumlah pesanan, dan total penjualan di dashboard admin */
-
+                /* ngga bisa pake data di $pesanan karena mau dipakai buat nampilin tabel pesanan*/
                 $total_pendapatan = mysqli_query($conn, "
-                SELECT SUM(total_harga) AS total
+                SELECT SUM(total_harga) AS totalKeuntungan
                 FROM pesanan
                 WHERE status = 'Selesai'
             ");
-                $total_pendapatan = mysqli_fetch_assoc($total_pendapatan)['total'];
+                $total_pendapatan = mysqli_fetch_assoc($total_pendapatan)['totalKeuntungan'];
                 ?>
                 <tr>
                     <th>Total Pendapatan Rp <?php echo number_format($total_pendapatan); ?></th>
                 </tr>
-                <?php $jumlah_pesanan = mysqli_query($conn, "
-                SELECT COUNT(*) AS total
+                
+
+                <?php 
+                /* ngitung jumlah pesanan yang udah selesai */
+                $jumlah_pesanan = mysqli_query($conn, "
+                SELECT COUNT(*) AS totalPesanan
                 FROM pesanan
                 WHERE status = 'Selesai'
             ");
-                $jumlah_pesanan = mysqli_fetch_assoc($jumlah_pesanan)['total'];
+                $jumlah_pesanan = mysqli_fetch_assoc($jumlah_pesanan)['totalPesanan'];
                 ?>
                 <tr>
                     <th>Jumlah Pesanan -> <?php echo $jumlah_pesanan; ?></th>
                 </tr>
 
-                <?php $total_penjualan = mysqli_query($conn, "
-                SELECT SUM(jumlah) AS total
+
+                <?php
+                /* ngitung total penjualan (jumlah produk yang terjual) */ 
+                $total_penjualan = mysqli_query($conn, "
+                SELECT SUM(jumlah) AS totalProdukTerjual
                 FROM detail_pesanan
                 JOIN pesanan ON detail_pesanan.id_pesanan = pesanan.id_pesanan
                 WHERE pesanan.status = 'Selesai'
             ");
-                $total_penjualan = mysqli_fetch_assoc($total_penjualan)['total'];
+                $total_penjualan = mysqli_fetch_assoc($total_penjualan)['totalProdukTerjual'];
                 ?>
                 <tr>
                     <th>Total Penjualan -> <?php echo $total_penjualan; ?> pack</th>
@@ -212,7 +223,7 @@ if (session_status() === PHP_SESSION_NONE) {
                                 <td>
                                     <?php
                                     $id_pesanan = $p['id_pesanan'];
-                                    $items = mysqli_query($conn, "
+                                    $daftarProdukDipesan = mysqli_query($conn, "
                                     SELECT 
                                         produk.nama_produk,
                                         detail_pesanan.jumlah
@@ -221,7 +232,7 @@ if (session_status() === PHP_SESSION_NONE) {
                                     WHERE detail_pesanan.id_pesanan = '$id_pesanan'
                                 ");
 
-                                    while ($item = mysqli_fetch_assoc($items)) {
+                                    while ($item = mysqli_fetch_assoc($daftarProdukDipesan)) {
                                         echo $item['nama_produk'] . " (x" . $item['jumlah'] . ")<br>";
                                         echo "<br>";
                                     }
@@ -320,6 +331,7 @@ if (session_status() === PHP_SESSION_NONE) {
                             <th>Gambar</th>
                             <th>Url Gambar</th>
                             <th>Nama Produk</th>
+                            <th>Deskripsi</th>
                             <th>Harga</th>
                             <th>Stok</th>
                             <th>Aksi</th>
@@ -343,6 +355,10 @@ if (session_status() === PHP_SESSION_NONE) {
                                     <td>
                                         <input type="text" name="nama_produk" class="form-control"
                                             value="<?php echo $p['nama_produk']; ?>" required>
+                                    </td>
+                                    <td>
+                                        <textarea name="deskripsi" class="form-control"
+                                            required><?php echo $p['deskripsi']; ?></textarea>
                                     </td>
                                     <td>
                                         <input type="number" name="harga" class="form-control"
@@ -385,6 +401,11 @@ if (session_status() === PHP_SESSION_NONE) {
                 <div class="col-md-6">
                     <label class="form-label">Nama Produk</label>
                     <input type="text" name="nama_produk" class="form-control" placeholder="Masukkan nama produk"
+                        required>
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label">Deskripsi</label>
+                    <input type="text" name="deskripsi" class="form-control" placeholder="Masukkan deskripsi produk"
                         required>
                 </div>
                 <div class="col-md-6">

@@ -90,7 +90,7 @@ if (isset($_POST['register'])) {
                                     placeholder="Masukkan alamat" required></textarea>
                             </div>
                             <div class="d-grid">
-                                <button type="submit" name="register" class="btn btn-primary btn-lg">Register</button>
+                                <button type="submit" name="register" class="btn btn-primary btn-lg" onclick="return confirm('Apakah anda sudah yakin dengan data anda?')">Register</button>
                             </div>
                         </form>
                         <p class="text-center mt-4 mb-0">Sudah punya akun?<a href="login.php"

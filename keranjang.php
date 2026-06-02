@@ -9,17 +9,51 @@ if (!isset($_SESSION['pengguna'])) {
 
 /* Ambil data keranjang user sesuai ID pengguna */
 $id_pengguna = $_SESSION['pengguna']['id_pengguna'];
-$query = mysqli_query($conn, "
-    SELECT keranjang.*, produk.nama_produk, produk.harga, produk.gambar
-    FROM keranjang
-    JOIN produk ON keranjang.id_produk = produk.id_produk
-    WHERE keranjang.id_pengguna='$id_pengguna'
-");
 
-/* Simpan data keranjang dalam array */
-$data = [];
-while ($row = mysqli_fetch_assoc($query)) {
-    $data[] = $row;
+/* Proses tambah dan kurang jumlah produk di keranjang */
+if (isset($_POST['tambah'])) {
+    $id_produk = $_POST['id_produk'];
+    mysqli_query($conn, "
+        UPDATE keranjang
+        SET jumlah = jumlah + 1
+        WHERE id_pengguna = '$id_pengguna'
+        AND id_produk = '$id_produk'
+    ");
+    header("location: keranjang.php#keranjang_anda");
+    exit;
+}
+
+/* Proses kurangi jumlah produk di keranjang */
+if (isset($_POST['kurang'])) {
+    $id_produk = $_POST['id_produk'];
+    $cek = mysqli_query($conn, "
+        SELECT jumlah
+        FROM keranjang
+        WHERE id_pengguna = '$id_pengguna'
+        AND id_produk = '$id_produk'
+    ");
+
+    $data = mysqli_fetch_assoc($cek);
+    if ($data['jumlah'] > 1) {
+        /* Jika jumlah lebih dari 1, kurangi jumlahnya */
+        mysqli_query($conn, "
+            UPDATE keranjang
+            SET jumlah = jumlah - 1
+            WHERE id_pengguna = '$id_pengguna'
+            AND id_produk = '$id_produk'
+        ");
+
+    } else {
+
+        /* Jika jumlah tinggal 1, hapus produk */
+        mysqli_query($conn, "
+            DELETE FROM keranjang
+            WHERE id_pengguna = '$id_pengguna'
+            AND id_produk = '$id_produk'
+        ");
+    }
+    header("location: keranjang.php#keranjang_anda");
+    exit;
 }
 ?>
 
@@ -52,7 +86,8 @@ while ($row = mysqli_fetch_assoc($query)) {
                     <?php if (isset($_SESSION['pengguna'])) { ?>
                         <li class="nav-item"><a class="nav-link" href="riwayat_pesanan.php">Riwayat Pesanan</a></li>
                         <li class="nav-item"><a class="nav-link" href="profil.php">Profil</a></li>
-                        <li class="nav-item"><a class="nav-link" href="logout.php" onclick="return confirm('Apakah Anda yakin ingin logout?')">Logout</a></li>
+                        <li class="nav-item"><a class="nav-link" href="logout.php"
+                                onclick="return confirm('Apakah Anda yakin ingin logout?')">Logout</a></li>
                         <?php if (isset($_SESSION['pengguna']) && $_SESSION['pengguna']['role'] == 'admin') { ?>
                             <li class="nav-item"><a class="nav-link" href="dashboard_admin.php">Admin</a></li>
                         <?php } ?>
@@ -72,17 +107,30 @@ while ($row = mysqli_fetch_assoc($query)) {
                 <div class="card-body">
                     <h2 class="section-title  text-center mb-4">Keranjang Anda</h2>
 
-                    
-                    <?php if (count($data) == 0) { /* Cek apakah keranjang kosong atau tidak */?>
+
+                    <?php
+                    $data = mysqli_query($conn, "
+                        SELECT keranjang.*, produk.nama_produk, produk.harga, produk.gambar
+                        FROM keranjang
+                        JOIN produk ON keranjang.id_produk = produk.id_produk
+                        WHERE keranjang.id_pengguna='$id_pengguna'
+                    ");
+                    if (mysqli_num_rows($data) == 0) { /* Cek apakah keranjang kosong atau tidak */ ?>
 
                         <div class="alert alert-warning text-center section-title">
                             Keranjang anda masih kosong
                         </div>
 
-                    <?php } else { ?>
+                    <?php } else {
 
+                        $data = mysqli_query($conn, "
+                        SELECT keranjang.*, produk.nama_produk, produk.harga, produk.gambar
+                        FROM keranjang
+                        JOIN produk ON keranjang.id_produk = produk.id_produk
+                        WHERE keranjang.id_pengguna='$id_pengguna'
+                    "); ?>
                         <div class="row g-4 mt-4 d-flex justify-content-center">
-                            <?php foreach ($data as $p) { ?>
+                            <?php while ($p = mysqli_fetch_assoc($data)) { ?>
                                 <div class="col-md-3 p-4">
                                     <div class="card custom-card">
                                         <img src="<?php echo $p['gambar']; ?>" class="card-img-top">
@@ -108,8 +156,16 @@ while ($row = mysqli_fetch_assoc($query)) {
                             </thead>
                             <tbody>
                                 <?php
+
                                 $total = 0;
-                                foreach ($data as $d) {
+                                $data = mysqli_query($conn, "
+                                    SELECT keranjang.*, produk.nama_produk, produk.harga
+                                    FROM keranjang
+                                    JOIN produk ON keranjang.id_produk = produk.id_produk
+                                    WHERE keranjang.id_pengguna='$id_pengguna'
+                                ");
+
+                                while ($d = mysqli_fetch_assoc($data)) {
                                     $subtotal = $d['harga'] * $d['jumlah'];
                                     $total += $subtotal;
                                     ?>
@@ -119,15 +175,17 @@ while ($row = mysqli_fetch_assoc($query)) {
                                         <td><?php echo $d['jumlah']; ?></td>
 
                                         <td>
-                                            <a href="proses_edit_keranjang.php?id=<?= $d['id_produk']; ?>&aksi=tambah"
-                                                class="btn btn-success btn-sm">
-                                                +
-                                            </a>
+                                            <form method="POST">
+                                                <input type="hidden" name="id_produk" value="<?= $d['id_produk']; ?>">
 
-                                            <a href="proses_edit_keranjang.php?id=<?= $d['id_produk']; ?>&aksi=kurang"
-                                                class="btn btn-warning btn-sm">
-                                                -
-                                            </a>
+                                                <button type="submit" name="tambah" class="btn btn-success btn-sm">
+                                                    +
+                                                </button>
+
+                                                <button type="submit" name="kurang" class="btn btn-warning btn-sm">
+                                                    -
+                                                </button>
+                                            </form>
                                         </td>
                                         <td>Rp. <?php echo $subtotal; ?></td>
                                     </tr>

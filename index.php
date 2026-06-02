@@ -1,5 +1,27 @@
 <?php include 'koneksi.php';
 $produk = mysqli_query($conn, "SELECT * FROM produk WHERE stok > 0");
+
+if (isset($_POST['tambahKeranjang'])) {
+    if (!isset($_SESSION['pengguna'])) {
+        header("location: login.php");
+        exit;
+    }
+
+    $id_pengguna = $_SESSION['pengguna']['id_pengguna'];
+    $id_produk = $_POST['id_produk'];
+
+    $ngecek_keranjang = mysqli_query($conn, "SELECT * FROM keranjang WHERE id_pengguna='$id_pengguna' AND id_produk='$id_produk';");
+
+    if (mysqli_num_rows($ngecek_keranjang) > 0) {
+        mysqli_query($conn, "UPDATE keranjang SET jumlah=jumlah+1 WHERE id_pengguna='$id_pengguna' AND id_produk='$id_produk';");
+    } else {
+        mysqli_query($conn, "INSERT INTO keranjang(id_pengguna, id_produk, jumlah) VALUES('$id_pengguna','$id_produk',1);");
+    }
+
+    header("location: index.php#produk");
+    exit;
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -32,7 +54,8 @@ $produk = mysqli_query($conn, "SELECT * FROM produk WHERE stok > 0");
                         <li class="nav-item"><a class="nav-link" href="riwayat_pesanan.php">Riwayat Pesanan</a></li>
                         <li class="nav-item"><a class="nav-link" href="keranjang.php">Keranjang</a></li>
                         <li class="nav-item"><a class="nav-link" href="profil.php">Profil</a></li>
-                        <li class="nav-item"><a class="nav-link" href="logout.php" onclick="return confirm('Apakah Anda yakin ingin logout?')">Logout</a></li>
+                        <li class="nav-item"><a class="nav-link" href="logout.php"
+                                onclick="return confirm('Apakah Anda yakin ingin logout?')">Logout</a></li>
                         <?php if (isset($_SESSION['pengguna']) && $_SESSION['pengguna']['role'] == 'admin') { ?>
                             <li class="nav-item"><a class="nav-link" href="dashboard_admin.php">Admin</a></li>
                         <?php } ?>
@@ -67,8 +90,11 @@ $produk = mysqli_query($conn, "SELECT * FROM produk WHERE stok > 0");
                             <p><?php echo $p['deskripsi']; ?></p>
                             <p>Rp. <?php echo $p['harga']; ?></p>
                             <p>Stok: <?php echo $p['stok']; ?></p>
-                            <a href="proses_tambah_keranjang.php?id=<?php echo $p['id_produk']; ?>" class="btn custom-btn"
-                                onclick="return confirm('tambah ke keranjang?')">Tambah ke Keranjang</a>
+                            <form method="POST">
+                                <input type="hidden" name="id_produk" value="<?php echo $p['id_produk']; ?>">
+                                <button type="submit" name="tambahKeranjang" class="btn custom-btn">Tambah ke
+                                    Keranjang</button>
+                            </form>
                         </div>
                     </div>
                 </div>
